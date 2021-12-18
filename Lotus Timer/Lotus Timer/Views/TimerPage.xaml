@@ -1,0 +1,71 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:Lotus_Timer.ViewModels"
+             x:Class="Lotus_Timer.Views.TimerPage"
+             Title="{Binding Title}">
+
+    <ContentPage.BindingContext>
+        <vm:TimerViewModel />
+    </ContentPage.BindingContext>
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Color x:Key="Accent">#9966EE</Color>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="100"/>
+                <RowDefinition Height="100"/>
+                <RowDefinition Height="300"/>
+                <RowDefinition Height="100"/>
+            </Grid.RowDefinitions>
+            <Label
+                Grid.Row="1"
+                Text="{Binding Scramble}"
+                TextColor="{StaticResource Accent}"
+                FontSize="14"
+                HorizontalOptions="Center"
+                />
+            <Button
+                Grid.Row="2"
+                Text="{Binding TimerText}"
+                CornerRadius="150"
+                FontSize="50"
+                TextColor="{StaticResource Accent}"
+                BackgroundColor="#00ffffff"
+                Command="{Binding TimerButtonCommand}"
+                WidthRequest="300"
+                HeightRequest="300"
+                VerticalOptions="CenterAndExpand"
+                HorizontalOptions="CenterAndExpand"/>
+            <Ellipse
+                Grid.Row="2"
+                Stroke="#9966EE"
+                StrokeThickness="5"
+                WidthRequest="300"
+                HeightRequest="300"
+                VerticalOptions="CenterAndExpand"
+                HorizontalOptions="CenterAndExpand"/>
+            <StackLayout Grid.Row="4">
+                <Label
+                    FontSize="14"
+                    Text="Average of 5: XX.XX"
+                    TextColor="{StaticResource Accent}"
+                    HorizontalOptions="Center"/>
+                <Label
+                    FontSize="14"
+                    Text="Average of 12: XX.XX"
+                    TextColor="{StaticResource Accent}"
+                    HorizontalOptions="Center"/>
+                <Label
+                    FontSize="14"
+                    Text="Average of 100: XX.XX"
+                    TextColor="{StaticResource Accent}"
+                    HorizontalOptions="Center"/>
+            </StackLayout>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

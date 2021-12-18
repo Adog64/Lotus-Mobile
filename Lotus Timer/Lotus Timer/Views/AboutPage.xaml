@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Lotus_Timer.Views.AboutPage"
+             xmlns:vm="clr-namespace:Lotus_Timer.ViewModels"
+             Title="{Binding Title}">
+
+    <ContentPage.BindingContext>
+        <vm:AboutViewModel />
+    </ContentPage.BindingContext>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <StackLayout BackgroundColor="{StaticResource Primary}" VerticalOptions="FillAndExpand" HorizontalOptions="Fill">
+            <StackLayout Orientation="Horizontal" HorizontalOptions="Center" VerticalOptions="Center">
+                <Image Source="about_panel.png" VerticalOptions="Center" HeightRequest="700" />
+            </StackLayout>
+        </StackLayout>
+        <Button
+            Grid.Row="1"
+            Margin="0,0,0,0" 
+            Text="Learn more"
+            HeightRequest="50"
+            Command="{Binding OpenWebCommand}"
+            BackgroundColor="#EEEEEE"
+            TextColor="#9966EE" />
+    </Grid>
+
+</ContentPage>
