@@ -14,9 +14,9 @@ namespace Lotus_Timer.Views
     {
         public TimerPage()
         {
+            BindingContext = new TimerViewModel();
             InitializeComponent();
 
-            BindingContext = new TimerViewModel();
         }
     }
 }

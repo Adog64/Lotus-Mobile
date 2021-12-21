@@ -27,7 +27,7 @@
                 />
             <Button
                 Grid.Row="2"
-                Text="{Binding TimerText}"
+                Text="{Binding ClockFace}"
                 CornerRadius="150"
                 FontSize="50"
                 TextColor="{StaticResource Accent}"

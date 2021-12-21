@@ -12,16 +12,26 @@ namespace Lotus_Timer.ViewModels
     public class TimerViewModel : BaseViewModel
     {
         public ICommand TimerButtonCommand { get; }
-        public Timer timer;
-        public string TimerText { get; set; }
-        public string Scramble { get; set; }
+        Timer timer;
+        string _scramble;
+        string _clockFace;
+        public string ClockFace 
+        {
+            get { return _clockFace; }
+            set { SetProperty(ref _clockFace, String.Copy(value)); }
+        }
+
+        public string Scramble { 
+            get { return _scramble; }
+            set { SetProperty(ref _scramble, String.Copy(value)); }
+        }
 
         public TimerViewModel()
         {
             Title = "Timer";
             timer = new Timer();
-            TimerText = timer.clockFace;
-            Scramble = timer.scramble;
+            _clockFace = "Ready";
+            _scramble = timer.scramble;
             TimerButtonCommand = new Command(() => Next());
         }
 
@@ -29,7 +39,7 @@ namespace Lotus_Timer.ViewModels
         {
             timer.GenerateScramble();
             Scramble = timer.scramble;
-            Debug.WriteLine(Scramble);
+            ClockFace = 15.ToString();
         }
     }
 }
