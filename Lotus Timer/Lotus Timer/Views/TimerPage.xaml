@@ -7,11 +7,11 @@
     
     <ContentPage.Resources>
         <ResourceDictionary>
-            <Color x:Key="Accent">#9966EE</Color>
+            <Color x:Key="Accent">#FFFFFF</Color>
         </ResourceDictionary>
     </ContentPage.Resources>
     <ContentPage.Content>
-        <Grid>
+        <Grid BackgroundColor="#9500E5">
             <Grid.RowDefinitions>
                 <RowDefinition Height="100"/>
                 <RowDefinition Height="100"/>
@@ -39,7 +39,7 @@
                 HorizontalOptions="CenterAndExpand"/>
             <Ellipse
                 Grid.Row="2"
-                Stroke="#9966EE"
+                Stroke="White"
                 StrokeThickness="5"
                 WidthRequest="300"
                 HeightRequest="300"
