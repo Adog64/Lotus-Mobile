@@ -5,35 +5,31 @@ using System.Windows.Input;
 using Xamarin.Forms;
 using Xamarin.Essentials;
 using Lotus_Timer.Models;
+using System.Diagnostics;
 
 namespace Lotus_Timer.ViewModels
 {
     public class TimerViewModel : BaseViewModel
     {
         public ICommand TimerButtonCommand { get; }
-        protected Timer timer;
-        private string scramble;
-        public string TimerText
-        {
-            get { return timer.ClockFace(); }
-        }
-        public string Scramble
-        {
-            get { return scramble; }
-        }
+        public Timer timer;
+        public string TimerText { get; set; }
+        public string Scramble { get; set; }
+
         public TimerViewModel()
         {
             Title = "Timer";
             timer = new Timer();
-            scramble = timer.scramble;
-            TimerButtonCommand = new Command(() => reloadScramble());
+            TimerText = timer.clockFace;
+            Scramble = timer.scramble;
+            TimerButtonCommand = new Command(() => Next());
         }
 
-        public void reloadScramble()
+        public void Next()
         {
-            timer.ClockFace();
             timer.GenerateScramble();
-            scramble = timer.scramble;
+            Scramble = timer.scramble;
+            Debug.WriteLine(Scramble);
         }
     }
 }

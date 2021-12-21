@@ -8,6 +8,7 @@ namespace Lotus_Timer.Models
     {
         public string cubeType, scramble;
         public double time;
+        public string clockFace;
         private TimerState state;
         private Scrambler scrambler;
         public enum TimerState
@@ -24,18 +25,10 @@ namespace Lotus_Timer.Models
 
         public Timer(string cubeType)
         {
+            clockFace = "Ready";
             this.cubeType = cubeType;
             scrambler = new Scrambler(cubeType);
             GenerateScramble();
-        }
-
-        public string ClockFace()
-        {
-            if (state == TimerState.READY)
-                return "Ready?";
-            else
-                return Convert.ToString(time);
-
         }
 
         public void GenerateScramble()
@@ -45,24 +38,26 @@ namespace Lotus_Timer.Models
 
         public void Next()
         {
-            if (state == TimerState.READY)
+            switch (state)
             {
-                state = TimerState.INSPECTION;
-                time = 0;
-            }
-            else if (state == TimerState.INSPECTION)
-            {
-                state = TimerState.TIMING;
-                time = 15;
-            }
-            else if (state == TimerState.TIMING)
-            {
-                state = TimerState.STOPPED;
-                time = 0;
-            }
-            else if (state == TimerState.STOPPED)
-            {
-                state = TimerState.READY;
+                case TimerState.READY:
+                    state = TimerState.INSPECTION;
+                    time = 15;
+                    clockFace = time.ToString();
+                    break;
+                case TimerState.INSPECTION:
+                    state = TimerState.TIMING;
+                    time = 0;
+                    clockFace = time.ToString();
+                    break;
+                case TimerState.TIMING:
+                    state = TimerState.STOPPED;
+                    clockFace = time.ToString();
+                    break;
+                case TimerState.STOPPED:
+                    state = TimerState.INSPECTION;
+                    clockFace = "Ready";
+                    break;
             }
         }
     }

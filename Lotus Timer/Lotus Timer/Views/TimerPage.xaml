@@ -4,11 +4,7 @@
              xmlns:vm="clr-namespace:Lotus_Timer.ViewModels"
              x:Class="Lotus_Timer.Views.TimerPage"
              Title="{Binding Title}">
-
-    <ContentPage.BindingContext>
-        <vm:TimerViewModel />
-    </ContentPage.BindingContext>
-
+    
     <ContentPage.Resources>
         <ResourceDictionary>
             <Color x:Key="Accent">#9966EE</Color>
