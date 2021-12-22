@@ -6,15 +6,16 @@ namespace Lotus_Timer.Models
 {
     public class Session
     {
-        public float Mo3 { get; set; }
-        public float Ao5 { get; set; }
-        public float Ao12 { get; set; }
-        public float Ao100 { get; set; }
-        public float Ao1000 { get; set; }
-        public float Worst { get; set; }
-        public float Best { get; set; }
-        public float Average { get; set; }
-        public IList<Solve> Solves { get; set; }
+        public double Mo3 { get; set; }
+        public double Ao5 { get; set; }
+        public double Ao12 { get; set; }
+        public double Ao100 { get; set; }
+        public double Ao1000 { get; set; }
+        public double Worst { get; set; }
+        public double Best { get; set; }
+        public double Average { get; set; }
+        public List<Solve> Solves { get; set; }
         public string CubeType { get; set; }
+        public string Name { get; set; }
     }
 }

@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
+using System.IO;
 using System.Windows.Input;
 using Xamarin.Forms;
 using Xamarin.Essentials;
@@ -19,6 +19,7 @@ namespace Lotus_Timer.ViewModels
         string _clockFace;
         Scrambler _scrambler;
         TimerState _timerState;
+        SessionManager _sessionManager;
         public string ClockFace 
         {
             get { return _clockFace; }
@@ -43,6 +44,7 @@ namespace Lotus_Timer.ViewModels
             _scrambler = new Scrambler("333");
             _time = 0;
             _timer = new Stopwatch();
+            _sessionManager = new SessionManager();
             _timerState = TimerState.READY;
             ClockFace = "Ready";
             Scramble = _scrambler.generateScramble();
@@ -101,6 +103,12 @@ namespace Lotus_Timer.ViewModels
                         ClockFace = TimeSpan.FromSeconds(_time).ToString(@"%m\:ss\.ff");
                     else
                         ClockFace = TimeSpan.FromSeconds(_time).ToString(@"%s\.ff");
+
+                    Solve currentSolve = new Solve();
+                    currentSolve.Scramble = Scramble;
+                    currentSolve.Time = _time;
+                    currentSolve.Timestamp = (DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1))).TotalSeconds;
+                    _sessionManager.Publish(currentSolve);
                     Scramble = _scrambler.generateScramble();
                     break;
                 case TimerState.STOPPED:
@@ -226,15 +234,60 @@ namespace Lotus_Timer.ViewModels
         // private class for managing time data
         private class SessionManager
         {
-            
+            string fileName;
+            public List<Session> Sessions { get; set; }
+            public int CurrentSessionID { get; set; } = 0;
             public SessionManager()
-            {
-                
+            { 
+                fileName = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "sessions.json");
+                if (!File.Exists(fileName))
+                {
+                    string json = JsonConvert.SerializeObject(Sessions);
+                    File.Create(fileName);
+                    File.WriteAllText(fileName, json);
+                }
+                Sessions = JsonConvert.DeserializeObject<List<Session>>(File.ReadAllText(fileName));
             }
 
-            public void CreateSession(string cubeType)
+            public void Publish(Solve solve)
             {
+                Sessions[CurrentSessionID].Solves.Add(solve);
+                UpdateSessionStats();
+                File.WriteAllText(fileName, JsonConvert.SerializeObject(Sessions));
+            }
 
+            public void UpdateSessionStats()
+            {
+                Sessions[CurrentSessionID].Ao5 = GetAoN(5);
+                Sessions[CurrentSessionID].Ao12 = GetAoN(12);
+                Sessions[CurrentSessionID].Ao100 = GetAoN(100);
+                Sessions[CurrentSessionID].Ao1000 = GetAoN(1000);       
+            }
+
+            public double GetAoN(int n)
+            {
+                if (n > Sessions[CurrentSessionID].Solves.Count)
+                    return 0;                                           // there is no average if n solves were not completed
+                int buffer = (int)Math.Ceiling(n * 0.05);               // average is defined as the mean of the middle 90% of solves
+                buffer = buffer > 1 ? buffer : 1;                       // buffer must be at least 1
+                List<Solve> lastNSolves = new List<Solve>();            // list of the last n solves
+                for (int i = Sessions[CurrentSessionID].Solves.Count - n; i < Sessions[CurrentSessionID].Solves.Count; i++)
+                    lastNSolves.Add(Sessions[CurrentSessionID].Solves[i]);
+                int dnfs = 0;
+                foreach (Solve s in lastNSolves)
+                    dnfs += (s.Penalty == -1) ? 1 : 0;
+                if (dnfs > buffer)                                      // if the dnf account for more than 5% of solves, the average is conseidered a dnf
+                    return -1;
+
+                // calculate the mean of the middle 90% of times
+                List<double> times = new List<double>();
+                foreach (Solve s in lastNSolves)
+                    times.Add(s.Penalty >= 0 ? s.Time + s.Penalty : -1);// all dnfs go to bottom of list when sorted
+                times.Sort();
+                double totalTime = 0;
+                for (int i = buffer; i < times.Count - buffer; i++)     // sum middle 90%
+                    totalTime += times[i];
+                return totalTime / (times.Count - (2 * buffer));        // return mean of middle 90%
             }
         }
     }
