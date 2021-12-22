@@ -6,6 +6,7 @@ using Xamarin.Forms;
 using Xamarin.Essentials;
 using Lotus_Timer.Models;
 using System.Diagnostics;
+using Newtonsoft.Json;
 
 namespace Lotus_Timer.ViewModels
 {
@@ -219,6 +220,21 @@ namespace Lotus_Timer.ViewModels
                 scramble = scramble.Substring(0, scramble.Length - 1);      // remove the trailing space
 
                 return scramble;
+            }
+        }
+
+        // private class for managing time data
+        private class SessionManager
+        {
+            
+            public SessionManager()
+            {
+                
+            }
+
+            public void CreateSession(string cubeType)
+            {
+
             }
         }
     }
