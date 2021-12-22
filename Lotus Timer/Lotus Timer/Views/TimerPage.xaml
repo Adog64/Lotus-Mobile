@@ -21,6 +21,8 @@
             <Label
                 Grid.Row="1"
                 Text="{Binding Scramble}"
+                HorizontalTextAlignment="Center"
+                Padding="10"
                 TextColor="{StaticResource Accent}"
                 FontSize="14"
                 HorizontalOptions="Center"
