@@ -50,17 +50,17 @@
             <StackLayout Grid.Row="4">
                 <Label
                     FontSize="14"
-                    Text="Average of 5: XX.XX"
+                    Text="{Binding Best}"
                     TextColor="{StaticResource Accent}"
                     HorizontalOptions="Center"/>
                 <Label
                     FontSize="14"
-                    Text="Average of 12: XX.XX"
+                    Text="{Binding Ao5}"
                     TextColor="{StaticResource Accent}"
                     HorizontalOptions="Center"/>
                 <Label
                     FontSize="14"
-                    Text="Average of 100: XX.XX"
+                    Text="{Binding Ao12}"
                     TextColor="{StaticResource Accent}"
                     HorizontalOptions="Center"/>
             </StackLayout>

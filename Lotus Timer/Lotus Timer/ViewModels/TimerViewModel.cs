@@ -17,6 +17,7 @@ namespace Lotus_Timer.ViewModels
         Stopwatch _timer;
         string _scramble;
         string _clockFace;
+        string _best, _worst, _ao5, _ao12, _ao100, _ao1000;
         Scrambler _scrambler;
         TimerState _timerState;
         SessionManager _sessionManager;
@@ -29,6 +30,43 @@ namespace Lotus_Timer.ViewModels
             get { return _scramble; }
             set { SetProperty(ref _scramble, String.Copy(value)); }
         }
+        
+        public string Best
+        {
+            get { return _best; }
+            set { SetProperty(ref _best, String.Copy(value)); }
+        }
+
+        public string Worst
+        {
+            get { return _worst; }
+            set { SetProperty(ref _worst, String.Copy(value)); }
+        }
+
+        public string Ao5
+        {
+            get { return _ao5; }
+            set { SetProperty(ref _ao5, String.Copy(value)); }
+        }
+
+        public string Ao12
+        {
+            get { return _ao12; }
+            set { SetProperty(ref _ao12, String.Copy(value)); }
+        }
+
+        public string Ao100
+        {
+            get { return _ao100; }
+            set { SetProperty(ref _ao100, String.Copy(value)); }
+        }
+
+        public string Ao1000
+        {
+            get { return _ao1000; }
+            set { SetProperty(ref _ao1000, String.Copy(value)); }
+        }
+
 
         public enum TimerState
         {
@@ -86,10 +124,7 @@ namespace Lotus_Timer.ViewModels
                         if (_timerState == TimerState.TIMING)
                         {
                             _time++;
-                            if (TimeSpan.FromSeconds(_time).Minutes > 0)
-                                ClockFace = TimeSpan.FromSeconds(_time).ToString(@"%m\:ss");
-                            else
-                                ClockFace = TimeSpan.FromSeconds(_time).ToString(@"%s");
+                            ClockFace = _time.ToString();
                             return true;
                         }
                         return false;
@@ -99,16 +134,13 @@ namespace Lotus_Timer.ViewModels
                     _timer.Stop();
                     _timerState = TimerState.STOPPED;
                     _time = Math.Round(_timer.Elapsed.TotalSeconds, 2);
-                    if (TimeSpan.FromSeconds(_time).Minutes > 0)
-                        ClockFace = TimeSpan.FromSeconds(_time).ToString(@"%m\:ss\.ff");
-                    else
-                        ClockFace = TimeSpan.FromSeconds(_time).ToString(@"%s\.ff");
-
+                    ClockFace = FormatTime(_time);
                     Solve currentSolve = new Solve();
                     currentSolve.Scramble = Scramble;
                     currentSolve.Time = _time;
                     currentSolve.Timestamp = (DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1))).TotalSeconds;
                     _sessionManager.Publish(currentSolve);
+                    UpdateUserStats();
                     Scramble = _scrambler.generateScramble();
                     break;
                 case TimerState.STOPPED:
@@ -117,6 +149,26 @@ namespace Lotus_Timer.ViewModels
                     _timer.Reset();
                     break;
             }
+        }
+        
+        public void UpdateUserStats()
+        {
+            Best = "Best: " + FormatTime(_sessionManager.CurrentSession.Best);
+            Worst = "Worst: " + FormatTime(_sessionManager.CurrentSession.Worst);
+            Ao5 = "Average of 5: " + FormatTime(_sessionManager.CurrentSession.Ao5);
+            Ao12 = "Average of 12: " + FormatTime(_sessionManager.CurrentSession.Ao12);
+            Ao100 = "Average of 100: " + FormatTime(_sessionManager.CurrentSession.Ao100);
+            Ao1000 = "Average of 1000: " + FormatTime(_sessionManager.CurrentSession.Ao1000);
+        }
+        public string FormatTime(double seconds)
+        {
+            if (seconds <= 0)
+                return "-.-";
+
+            if (TimeSpan.FromSeconds(seconds).Minutes > 0)
+                return TimeSpan.FromSeconds(seconds).ToString(@"%m\:ss\.ff");
+            else
+                return TimeSpan.FromSeconds(seconds).ToString(@"%s\.ff");
         }
 
         // private class for quickly generating scrambles
@@ -235,8 +287,9 @@ namespace Lotus_Timer.ViewModels
         private class SessionManager
         {
             string fileName;
-            public List<Session> Sessions { get; set; }
-            public int CurrentSessionID { get; set; } = 0;
+            public List<Session> Sessions { get; set; } = new List<Session>();
+            public Session CurrentSession { get; set; }
+            
             public SessionManager()
             { 
                 fileName = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "sessions.json");
@@ -244,35 +297,52 @@ namespace Lotus_Timer.ViewModels
                 {
                     string json = JsonConvert.SerializeObject(Sessions);
                     File.Create(fileName);
-                    File.WriteAllText(fileName, json);
+                    //File.WriteAllText(fileName, json);
                 }
-                Sessions = JsonConvert.DeserializeObject<List<Session>>(File.ReadAllText(fileName));
+                AddSession("333");
+                CurrentSession = Sessions[0];
+                //Sessions = JsonConvert.DeserializeObject<List<Session>>(File.ReadAllText(fileName));
             }
 
             public void Publish(Solve solve)
             {
-                Sessions[CurrentSessionID].Solves.Add(solve);
+                CurrentSession.Solves.Add(solve);
                 UpdateSessionStats();
-                File.WriteAllText(fileName, JsonConvert.SerializeObject(Sessions));
+                //File.WriteAllText(fileName, JsonConvert.SerializeObject(Sessions));
+                Debug.WriteLine(CurrentSession.Ao5);
             }
 
             public void UpdateSessionStats()
             {
-                Sessions[CurrentSessionID].Ao5 = GetAoN(5);
-                Sessions[CurrentSessionID].Ao12 = GetAoN(12);
-                Sessions[CurrentSessionID].Ao100 = GetAoN(100);
-                Sessions[CurrentSessionID].Ao1000 = GetAoN(1000);       
+                CurrentSession.Ao5 = GetAoN(5);
+                CurrentSession.Ao12 = GetAoN(12);
+                CurrentSession.Ao100 = GetAoN(100);
+                CurrentSession.Ao1000 = GetAoN(1000);
+                
+                foreach (Solve s in CurrentSession.Solves)
+                {
+                    if (s.Penalty >= 0)
+                    {   
+                        // check for new best time
+                        if (CurrentSession.Best == 0 || CurrentSession.Best > (s.Time + s.Penalty))
+                            CurrentSession.Best = s.Time + s.Penalty;
+
+                        // check for new worst time
+                        if (CurrentSession.Worst == 0 || CurrentSession.Worst < (s.Time + s.Penalty))
+                            CurrentSession.Worst = s.Time + s.Penalty;
+                    }
+                }
             }
 
             public double GetAoN(int n)
             {
-                if (n > Sessions[CurrentSessionID].Solves.Count)
+                if (n > CurrentSession.Solves.Count)
                     return 0;                                           // there is no average if n solves were not completed
                 int buffer = (int)Math.Ceiling(n * 0.05);               // average is defined as the mean of the middle 90% of solves
                 buffer = buffer > 1 ? buffer : 1;                       // buffer must be at least 1
                 List<Solve> lastNSolves = new List<Solve>();            // list of the last n solves
-                for (int i = Sessions[CurrentSessionID].Solves.Count - n; i < Sessions[CurrentSessionID].Solves.Count; i++)
-                    lastNSolves.Add(Sessions[CurrentSessionID].Solves[i]);
+                for (int i = CurrentSession.Solves.Count - n; i < CurrentSession.Solves.Count; i++)
+                    lastNSolves.Add(CurrentSession.Solves[i]);
                 int dnfs = 0;
                 foreach (Solve s in lastNSolves)
                     dnfs += (s.Penalty == -1) ? 1 : 0;
@@ -288,6 +358,20 @@ namespace Lotus_Timer.ViewModels
                 for (int i = buffer; i < times.Count - buffer; i++)     // sum middle 90%
                     totalTime += times[i];
                 return totalTime / (times.Count - (2 * buffer));        // return mean of middle 90%
+            }
+
+            public void AddSession(string cubeType)
+            {
+                Session session = new Session();
+                session.CubeType = cubeType;
+                session.Name = cubeType;
+                session.Solves = new List<Solve>();
+                Sessions.Add(session);
+            }
+
+            public void SetSession(int sessionID)
+            {
+                CurrentSession = Sessions[sessionID];
             }
         }
     }
