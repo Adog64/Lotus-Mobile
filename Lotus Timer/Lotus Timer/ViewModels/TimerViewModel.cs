@@ -84,6 +84,7 @@ namespace Lotus_Timer.ViewModels
             _timer = new Stopwatch();
             _sessionManager = new SessionManager();
             _timerState = TimerState.READY;
+            UpdateUserStats();
             ClockFace = "Ready";
             Scramble = _scrambler.generateScramble();
             TimerButtonCommand = new Command(() => Next());
@@ -151,6 +152,7 @@ namespace Lotus_Timer.ViewModels
             }
         }
         
+        // update statistics that can be seen on-screen
         public void UpdateUserStats()
         {
             Best = "Best: " + FormatTime(_sessionManager.CurrentSession.Best);
@@ -160,15 +162,17 @@ namespace Lotus_Timer.ViewModels
             Ao100 = "Average of 100: " + FormatTime(_sessionManager.CurrentSession.Ao100);
             Ao1000 = "Average of 1000: " + FormatTime(_sessionManager.CurrentSession.Ao1000);
         }
+
+        // format seconds into a standard time format
         public string FormatTime(double seconds)
         {
             if (seconds <= 0)
                 return "-.-";
-
+            if (TimeSpan.FromSeconds(seconds).Hours > 0)
+                return TimeSpan.FromSeconds(seconds).ToString(@"%h\:mm\:ss\.ff");
             if (TimeSpan.FromSeconds(seconds).Minutes > 0)
                 return TimeSpan.FromSeconds(seconds).ToString(@"%m\:ss\.ff");
-            else
-                return TimeSpan.FromSeconds(seconds).ToString(@"%s\.ff");
+            return TimeSpan.FromSeconds(seconds).ToString(@"%s\.ff");
         }
 
         // private class for quickly generating scrambles
@@ -291,25 +295,27 @@ namespace Lotus_Timer.ViewModels
             public Session CurrentSession { get; set; }
             
             public SessionManager()
-            { 
-                fileName = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "sessions.json");
+            {
+
+                fileName = Path.Combine(FileSystem.AppDataDirectory, "sessions.json");
                 if (!File.Exists(fileName))
                 {
-                    string json = JsonConvert.SerializeObject(Sessions);
-                    File.Create(fileName);
-                    //File.WriteAllText(fileName, json);
+                    AddSession("333");
+                    CurrentSession = Sessions[0];
+                    File.WriteAllText(fileName, JsonConvert.SerializeObject(Sessions));
                 }
-                AddSession("333");
-                CurrentSession = Sessions[0];
-                //Sessions = JsonConvert.DeserializeObject<List<Session>>(File.ReadAllText(fileName));
+                else
+                {
+                    Sessions = JsonConvert.DeserializeObject<List<Session>>(File.ReadAllText(fileName));
+                    CurrentSession = Sessions[0];
+                }
             }
 
             public void Publish(Solve solve)
             {
                 CurrentSession.Solves.Add(solve);
                 UpdateSessionStats();
-                //File.WriteAllText(fileName, JsonConvert.SerializeObject(Sessions));
-                Debug.WriteLine(CurrentSession.Ao5);
+                File.WriteAllText(fileName, JsonConvert.SerializeObject(Sessions));
             }
 
             public void UpdateSessionStats()
