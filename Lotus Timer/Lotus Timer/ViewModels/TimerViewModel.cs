@@ -15,58 +15,58 @@ namespace Lotus_Timer.ViewModels
         public ICommand TimerButtonCommand { get; }
         double _time;
         Stopwatch _timer;
+        const double TICK = 0.0625;
+        float _progress;
         string _scramble;
         string _clockFace;
         string _best, _worst, _ao5, _ao12, _ao100, _ao1000;
         Scrambler _scrambler;
         TimerState _timerState;
         SessionManager _sessionManager;
-        public string ClockFace 
+        public string ClockFace
         {
             get { return _clockFace; }
             set { SetProperty(ref _clockFace, String.Copy(value)); }
         }
+        public float Progress
+        {
+            get { return _progress; }
+            set { SetProperty(ref _progress, value); }
+        }
         public string Scramble { 
             get { return _scramble; }
             set { SetProperty(ref _scramble, String.Copy(value)); }
-        }
-        
+        }   
         public string Best
         {
             get { return _best; }
             set { SetProperty(ref _best, String.Copy(value)); }
         }
-
         public string Worst
         {
             get { return _worst; }
             set { SetProperty(ref _worst, String.Copy(value)); }
         }
-
         public string Ao5
         {
             get { return _ao5; }
             set { SetProperty(ref _ao5, String.Copy(value)); }
         }
-
         public string Ao12
         {
             get { return _ao12; }
             set { SetProperty(ref _ao12, String.Copy(value)); }
         }
-
         public string Ao100
         {
             get { return _ao100; }
             set { SetProperty(ref _ao100, String.Copy(value)); }
         }
-
         public string Ao1000
         {
             get { return _ao1000; }
             set { SetProperty(ref _ao1000, String.Copy(value)); }
         }
-
 
         public enum TimerState
         {
@@ -83,6 +83,7 @@ namespace Lotus_Timer.ViewModels
             _time = 0;
             _timer = new Stopwatch();
             _sessionManager = new SessionManager();
+            _progress = 1;
             _timerState = TimerState.READY;
             UpdateUserStats();
             ClockFace = "Ready";
@@ -97,20 +98,20 @@ namespace Lotus_Timer.ViewModels
             {
                 case TimerState.READY:
                     _timerState = TimerState.INSPECTION;
+                    Progress = 1;
                     _time = 15;                     // length of inpection
                     Scramble = "";                  // make scramble invisible
                     ClockFace = _time.ToString();   // update display on timer
                     // start inspection timer
-                    Device.StartTimer(TimeSpan.FromSeconds(1), () =>
+                    Device.StartTimer(TimeSpan.FromSeconds(TICK), () =>
                     {
                         if (_timerState == TimerState.INSPECTION && _time > 0)
                         {
-                            _time--;
-                            ClockFace = _time.ToString();
+                            _time -= TICK;
+                            Progress = (float)(_time / 15);
+                            ClockFace = ((int)_time).ToString();
                             return true;
                         }
-                        /*ClockFace = "dnf";
-                        _timerState = TimerState.STOPPED;*/
                         return false;
                     });
                     break;
@@ -119,13 +120,15 @@ namespace Lotus_Timer.ViewModels
                     _timerState = TimerState.TIMING;
                     _time = 0;                          // clear time left from inspection
                     ClockFace = _time.ToString();       // update timer display
+                    Progress = 0;
                     // start timer
-                    Device.StartTimer(TimeSpan.FromSeconds(1), () =>
+                    Device.StartTimer(TimeSpan.FromSeconds(TICK), () =>
                     {
                         if (_timerState == TimerState.TIMING)
                         {
-                            _time++;
-                            ClockFace = _time.ToString();
+                            _time+=TICK;
+                            Progress = (float)((_time % 60)/60);
+                            ClockFace = ((int)_time).ToString();
                             return true;
                         }
                         return false;
@@ -142,10 +145,11 @@ namespace Lotus_Timer.ViewModels
                     currentSolve.Timestamp = (DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1))).TotalSeconds;
                     _sessionManager.Publish(currentSolve);
                     UpdateUserStats();
-                    Scramble = _scrambler.generateScramble();
                     break;
                 case TimerState.STOPPED:
                     ClockFace = "Ready";
+                    Progress = 1;
+                    Scramble = _scrambler.generateScramble();
                     _timerState = TimerState.READY;
                     _timer.Reset();
                     break;

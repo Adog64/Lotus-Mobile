@@ -2,6 +2,7 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vm="clr-namespace:Lotus_Timer.ViewModels"
+             xmlns:controls="clr-namespace:Lotus_Timer.Controls"
              x:Class="Lotus_Timer.Views.TimerPage"
              Title="{Binding Title}">
     
@@ -19,7 +20,6 @@
                 <RowDefinition Height="60"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                
                 <ColumnDefinition Width="170"/>
             </Grid.ColumnDefinitions>
                 <Label
@@ -45,17 +45,25 @@
                 HeightRequest="300"
                 VerticalOptions="CenterAndExpand"
                 HorizontalOptions="CenterAndExpand"/>
-            <Ellipse
+            <controls:CircleCountdown
+                Grid.Row="2"
+                Grid.ColumnSpan="2"
+                Progress="{Binding Progress}"
+                ProgressStartColor="{StaticResource Accent}"
+                ProgressEndColor="{StaticResource Accent}"
+                StrokeWidth="12"/>
+            <!--Ellipse
                 Grid.Row="2"
                 Grid.ColumnSpan="2"
                 Stroke="White"
-                StrokeThickness="5"
+                StrokeThickness="2"
                 WidthRequest="300"
                 HeightRequest="300"
                 VerticalOptions="CenterAndExpand"
-                HorizontalOptions="CenterAndExpand"/>
+                HorizontalOptions="CenterAndExpand"/-->
+            
             <StackLayout Grid.Row="4">
-                <Label
+                    <Label
                     FontSize="14"
                     Text="{Binding Best}"
                     TextColor="{StaticResource Accent}"
