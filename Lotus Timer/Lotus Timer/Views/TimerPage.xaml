@@ -16,10 +16,15 @@
                 <RowDefinition Height="100"/>
                 <RowDefinition Height="100"/>
                 <RowDefinition Height="300"/>
-                <RowDefinition Height="100"/>
+                <RowDefinition Height="60"/>
             </Grid.RowDefinitions>
-            <Label
+            <Grid.ColumnDefinitions>
+                
+                <ColumnDefinition Width="170"/>
+            </Grid.ColumnDefinitions>
+                <Label
                 Grid.Row="1"
+                Grid.ColumnSpan="2"
                 Text="{Binding Scramble}"
                 HorizontalTextAlignment="Center"
                 Padding="10"
@@ -29,6 +34,7 @@
                 />
             <Button
                 Grid.Row="2"
+                Grid.ColumnSpan="2"
                 Text="{Binding ClockFace}"
                 CornerRadius="150"
                 FontSize="50"
@@ -41,6 +47,7 @@
                 HorizontalOptions="CenterAndExpand"/>
             <Ellipse
                 Grid.Row="2"
+                Grid.ColumnSpan="2"
                 Stroke="White"
                 StrokeThickness="5"
                 WidthRequest="300"
@@ -52,6 +59,7 @@
                     FontSize="14"
                     Text="{Binding Best}"
                     TextColor="{StaticResource Accent}"
+                    HorizontalTextAlignment="End"
                     HorizontalOptions="Center"/>
                 <Label
                     FontSize="14"
@@ -61,6 +69,24 @@
                 <Label
                     FontSize="14"
                     Text="{Binding Ao12}"
+                    TextColor="{StaticResource Accent}"
+                    HorizontalOptions="Center"/>
+            </StackLayout>
+            <StackLayout Grid.Row="4" Grid.Column="1">
+                <Label
+                    FontSize="14"
+                    Text="{Binding Worst}"
+                    TextColor="{StaticResource Accent}"
+                    HorizontalTextAlignment="End"
+                    HorizontalOptions="Center"/>
+                <Label
+                    FontSize="14"
+                    Text="{Binding Ao100}"
+                    TextColor="{StaticResource Accent}"
+                    HorizontalOptions="Center"/>
+                <Label
+                    FontSize="14"
+                    Text="{Binding Ao1000}"
                     TextColor="{StaticResource Accent}"
                     HorizontalOptions="Center"/>
             </StackLayout>
