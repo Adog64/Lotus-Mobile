@@ -13,10 +13,14 @@ namespace Lotus_Timer.ViewModels
     public class TimerViewModel : BaseViewModel
     {
         public ICommand TimerButtonCommand { get; }
+        public ICommand DnfCommand { get; }
+        public ICommand Plus2Command { get; }
         double _time;
         Stopwatch _timer;
         const double TICK = 0.0625;
         float _progress;
+        bool _timeModifiers;
+        sbyte _penalty;
         string _scramble;
         string _clockFace;
         string _best, _worst, _ao5, _ao12, _ao100, _ao1000;
@@ -67,6 +71,11 @@ namespace Lotus_Timer.ViewModels
             get { return _ao1000; }
             set { SetProperty(ref _ao1000, String.Copy(value)); }
         }
+        public bool TimeModifiers
+        {
+            get { return _timeModifiers; }
+            set { SetProperty(ref _timeModifiers, value); }
+        }
 
         public enum TimerState
         {
@@ -81,6 +90,8 @@ namespace Lotus_Timer.ViewModels
             Title = "Timer";
             _scrambler = new Scrambler("333");
             _time = 0;
+            _penalty = 0;
+            _timeModifiers = false;
             _timer = new Stopwatch();
             _sessionManager = new SessionManager();
             _progress = 1;
@@ -89,6 +100,8 @@ namespace Lotus_Timer.ViewModels
             ClockFace = "Ready";
             Scramble = _scrambler.generateScramble();
             TimerButtonCommand = new Command(() => Next());
+            DnfCommand = new Command(() => Dnf());
+            Plus2Command = new Command(() => Plus2());
         }
 
         // incrament timer state and execute the next step of the timer
@@ -97,57 +110,20 @@ namespace Lotus_Timer.ViewModels
             switch (_timerState)
             {
                 case TimerState.READY:
-                    _timerState = TimerState.INSPECTION;
-                    Progress = 1;
-                    _time = 15;                     // length of inpection
-                    Scramble = "";                  // make scramble invisible
-                    ClockFace = _time.ToString();   // update display on timer
-                    // start inspection timer
-                    Device.StartTimer(TimeSpan.FromSeconds(TICK), () =>
-                    {
-                        if (_timerState == TimerState.INSPECTION && _time > 0)
-                        {
-                            _time -= TICK;
-                            Progress = (float)(_time / 15);
-                            ClockFace = ((int)_time).ToString();
-                            return true;
-                        }
-                        return false;
-                    });
+                    DoInspection();
                     break;
                 case TimerState.INSPECTION:
-                    _timer.Start();
-                    _timerState = TimerState.TIMING;
-                    _time = 0;                          // clear time left from inspection
-                    ClockFace = _time.ToString();       // update timer display
-                    Progress = 0;
-                    // start timer
-                    Device.StartTimer(TimeSpan.FromSeconds(TICK), () =>
-                    {
-                        if (_timerState == TimerState.TIMING)
-                        {
-                            _time+=TICK;
-                            Progress = (float)((_time % 60)/60);
-                            ClockFace = ((int)_time).ToString();
-                            return true;
-                        }
-                        return false;
-                    });
+                    DoTiming();
                     break;
                 case TimerState.TIMING:
                     _timer.Stop();
                     _timerState = TimerState.STOPPED;
-                    _time = Math.Round(_timer.Elapsed.TotalSeconds, 2);
-                    ClockFace = FormatTime(_time);
-                    Solve currentSolve = new Solve();
-                    currentSolve.Scramble = Scramble;
-                    currentSolve.Time = _time;
-                    currentSolve.Timestamp = (DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1))).TotalSeconds;
-                    _sessionManager.Publish(currentSolve);
+                    TimeModifiers = true;
                     UpdateUserStats();
                     break;
                 case TimerState.STOPPED:
                     ClockFace = "Ready";
+                    TimeModifiers = false;
                     Progress = 1;
                     Scramble = _scrambler.generateScramble();
                     _timerState = TimerState.READY;
@@ -155,10 +131,73 @@ namespace Lotus_Timer.ViewModels
                     break;
             }
         }
+
+        public void DoInspection()
+        {
+            _timerState = TimerState.INSPECTION;
+            Progress = 1;
+            _time = 15;                     // length of inpection
+            Scramble = "";                  // make scramble invisible
+            ClockFace = _time.ToString();   // update display on timer
+                                            // start inspection timer
+            Device.StartTimer(TimeSpan.FromSeconds(TICK), () =>
+            {
+                if (_timerState == TimerState.INSPECTION && _time > 0)
+                {
+                    _time -= TICK;
+                    Progress = (float)(_time / 15);
+                    ClockFace = ((int)_time).ToString();
+                    return true;
+                }
+                return false;
+            });
+        }
+
+        public void DoTiming()
+        {
+            _timerState = TimerState.TIMING;
+            _time = 0;                          // clear time
+            _penalty = 0;
+            _timer.Start();
+            ClockFace = _time.ToString();       // update timer display
+            Progress = 0;
+            // start timer
+            Device.StartTimer(TimeSpan.FromSeconds(TICK), () =>
+            {
+                if (_timerState == TimerState.TIMING)
+                {
+                    _time += TICK;
+                    Progress = (float)((_time % 60) / 60);
+                    ClockFace = ((int)_time).ToString();
+                    return true;
+                }
+                return false;
+            });
+        }
+
+        public void Dnf()
+        {
+            _penalty = -1;
+            UpdateUserStats();
+        }
+        public void Plus2()
+        {
+            if (_penalty != -1)
+                _penalty = 2;
+            UpdateUserStats();
+        }
         
         // update statistics that can be seen on-screen
         public void UpdateUserStats()
         {
+            _time = Math.Round(_timer.Elapsed.TotalSeconds, 2);
+            ClockFace = _penalty == 0 ? FormatTime(_time) : (_penalty == -1) ? "dnf" : (FormatTime(_time) + "+2");
+            Solve currentSolve = new Solve();
+            currentSolve.Scramble = Scramble;
+            currentSolve.Time = _time;
+            currentSolve.Penalty = _penalty;
+            currentSolve.Timestamp = (DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1))).TotalSeconds;
+            _sessionManager.Publish(currentSolve);
             Best = "Best: " + FormatTime(_sessionManager.CurrentSession.Best);
             Worst = "Worst: " + FormatTime(_sessionManager.CurrentSession.Worst);
             Ao5 = "Average of 5: " + FormatTime(_sessionManager.CurrentSession.Ao5);
@@ -331,7 +370,7 @@ namespace Lotus_Timer.ViewModels
                 
                 foreach (Solve s in CurrentSession.Solves)
                 {
-                    if (s.Penalty >= 0)
+                    if (s.Penalty != -1)
                     {   
                         // check for new best time
                         if (CurrentSession.Best == 0 || CurrentSession.Best > (s.Time + s.Penalty))

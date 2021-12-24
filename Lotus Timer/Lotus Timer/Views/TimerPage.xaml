@@ -9,22 +9,28 @@
     <ContentPage.Resources>
         <ResourceDictionary>
             <Color x:Key="Accent">#FFFFFF</Color>
+            <Color x:Key="Background">#9500E5</Color>
         </ResourceDictionary>
     </ContentPage.Resources>
     <ContentPage.Content>
-        <Grid BackgroundColor="#9500E5">
+        <Grid BackgroundColor="{StaticResource Background}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="100"/>
                 <RowDefinition Height="100"/>
                 <RowDefinition Height="300"/>
-                <RowDefinition Height="60"/>
+                <RowDefinition Height="10"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="30"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="170"/>
+                <ColumnDefinition Width="130"/>
+                <ColumnDefinition Width="40"/>
+                <ColumnDefinition Width="40"/>
+                <ColumnDefinition Width="130"/>
             </Grid.ColumnDefinitions>
                 <Label
                 Grid.Row="1"
-                Grid.ColumnSpan="2"
+                Grid.ColumnSpan="4"
                 Text="{Binding Scramble}"
                 HorizontalTextAlignment="Center"
                 Padding="10"
@@ -34,7 +40,7 @@
                 />
             <Button
                 Grid.Row="2"
-                Grid.ColumnSpan="2"
+                Grid.ColumnSpan="4"
                 Text="{Binding ClockFace}"
                 CornerRadius="150"
                 FontSize="50"
@@ -47,7 +53,7 @@
                 HorizontalOptions="CenterAndExpand"/>
             <controls:CircleCountdown
                 Grid.Row="2"
-                Grid.ColumnSpan="2"
+                Grid.ColumnSpan="4"
                 Progress="{Binding Progress}"
                 ProgressStartColor="{StaticResource Accent}"
                 ProgressEndColor="{StaticResource Accent}"
@@ -61,9 +67,26 @@
                 HeightRequest="300"
                 VerticalOptions="CenterAndExpand"
                 HorizontalOptions="CenterAndExpand"/-->
-            
-            <StackLayout Grid.Row="4">
-                    <Label
+            <Button
+                Grid.Row="4"
+                Grid.Column="1"
+                Text="+2"
+                Command="{Binding Plus2Command}"
+                TextColor="{StaticResource Background}"
+                IsVisible="{Binding TimeModifiers}"
+                IsEnabled="{Binding TimeModifiers}"
+                Padding="-1"/>
+            <Button
+                Grid.Row="4"
+                Grid.Column="2"
+                Text="dnf"
+                Command="{Binding DnfCommand}"
+                TextColor="{StaticResource Background}"
+                IsVisible="{Binding TimeModifiers}"
+                IsEnabled="{Binding TimeModifiers}"
+                Padding="-1"/>
+            <StackLayout Grid.Row="6" Grid.ColumnSpan="2">
+                <Label
                     FontSize="14"
                     Text="{Binding Best}"
                     TextColor="{StaticResource Accent}"
@@ -80,7 +103,7 @@
                     TextColor="{StaticResource Accent}"
                     HorizontalOptions="Center"/>
             </StackLayout>
-            <StackLayout Grid.Row="4" Grid.Column="1">
+            <StackLayout Grid.Row="6" Grid.Column="2" Grid.ColumnSpan="2">
                 <Label
                     FontSize="14"
                     Text="{Binding Worst}"
