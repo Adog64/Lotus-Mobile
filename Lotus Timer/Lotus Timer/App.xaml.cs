@@ -14,7 +14,7 @@ namespace Lotus_Timer
             InitializeComponent();
 
             DependencyService.Register<MockDataStore>();
-            MainPage = new TimerPage();
+            MainPage = new TabsPage();
         }
 
         protected override void OnStart()
