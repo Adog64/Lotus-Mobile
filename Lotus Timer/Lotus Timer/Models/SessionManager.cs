@@ -12,6 +12,7 @@ namespace Lotus_Timer.Models
         string fileName;
         public List<Session> Sessions { get; set; } = new List<Session>();
         public Session CurrentSession { get; set; }
+        public Solve LatestSolve { get; set; }
 
         public SessionManager()
         {
@@ -28,11 +29,13 @@ namespace Lotus_Timer.Models
                 Sessions = JsonConvert.DeserializeObject<List<Session>>(File.ReadAllText(fileName));
                 CurrentSession = Sessions[0];
             }
+            LatestSolve = CurrentSession.Solves[CurrentSession.Solves.Count - 1];
         }
 
         public void Publish(Solve solve)
         {
             CurrentSession.Solves.Add(solve);
+            LatestSolve = solve;
             UpdateSessionStats();
             File.WriteAllText(fileName, JsonConvert.SerializeObject(Sessions));
         }
@@ -44,15 +47,19 @@ namespace Lotus_Timer.Models
             CurrentSession.Ao100 = GetAoN(100);
             CurrentSession.Ao1000 = GetAoN(1000);
 
+
+            // reset best and worst in case old values are deleted or become invalid
+            CurrentSession.Best = 0;
+            CurrentSession.Worst = 0;
             foreach (Solve s in CurrentSession.Solves)
             {
                 if (s.Penalty != -1)
                 {
-                    // check for new best time
+                    // check for best time
                     if (CurrentSession.Best == 0 || CurrentSession.Best > (s.Time + s.Penalty))
                         CurrentSession.Best = s.Time + s.Penalty;
 
-                    // check for new worst time
+                    // check for worst time
                     if (CurrentSession.Worst == 0 || CurrentSession.Worst < (s.Time + s.Penalty))
                         CurrentSession.Worst = s.Time + s.Penalty;
                 }

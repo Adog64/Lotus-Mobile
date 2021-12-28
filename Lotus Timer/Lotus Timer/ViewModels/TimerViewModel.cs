@@ -94,7 +94,7 @@ namespace Lotus_Timer.ViewModels
             _sessionManager = new SessionManager();
             _progress = 1;
             _timerState = TimerState.READY;
-            UpdateUserStats();
+            PublishSolve();
             ClockFace = "Ready";
             Scramble = _scrambler.generateScramble();
             TimerButtonCommand = new Command(() => Next());
@@ -117,7 +117,7 @@ namespace Lotus_Timer.ViewModels
                     _timer.Stop();
                     _timerState = TimerState.STOPPED;
                     TimeModifiers = true;
-                    UpdateUserStats();
+                    PublishSolve();
                     break;
                 case TimerState.STOPPED:
                     ClockFace = "Ready";
@@ -175,33 +175,42 @@ namespace Lotus_Timer.ViewModels
 
         public void Dnf()
         {
-            _penalty = -1;
-            UpdateUserStats();
+            _penalty = _penalty != -1 ? (sbyte)-1 : (sbyte)0;
+            Solve currentSolve = _sessionManager.LatestSolve;
+            currentSolve.Penalty = _penalty;
+            UpdatePageStats();
         }
         public void Plus2()
         {
-            if (_penalty != -1)
-                _penalty = 2;
-            UpdateUserStats();
-        }
-        
-        // update statistics that can be seen on-screen
-        public void UpdateUserStats()
-        {
-            _time = Math.Round(_timer.Elapsed.TotalSeconds, 2);
-            ClockFace = _penalty == 0 ? FormatTime(_time) : (_penalty == -1) ? "dnf" : (FormatTime(_time) + "+2");
-            Solve currentSolve = new Solve();
-            currentSolve.Scramble = Scramble;
-            currentSolve.Time = _time;
+            _penalty = _penalty != 2 ? (sbyte)2 : (sbyte)0;
+            Solve currentSolve = _sessionManager.LatestSolve;
             currentSolve.Penalty = _penalty;
-            currentSolve.Timestamp = (DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1))).TotalSeconds;
-            _sessionManager.Publish(currentSolve);
+            UpdatePageStats();
+        }
+
+        public void UpdatePageStats()
+        {
+            _sessionManager.UpdateSessionStats();
+            ClockFace = _penalty == 0 ? FormatTime(_time) : (_penalty == -1) ? "dnf" : (FormatTime(_time) + "+2");
             Best = "Best: " + FormatTime(_sessionManager.CurrentSession.Best);
             Worst = "Worst: " + FormatTime(_sessionManager.CurrentSession.Worst);
             Ao5 = "Average of 5: " + FormatTime(_sessionManager.CurrentSession.Ao5);
             Ao12 = "Average of 12: " + FormatTime(_sessionManager.CurrentSession.Ao12);
             Ao100 = "Average of 100: " + FormatTime(_sessionManager.CurrentSession.Ao100);
             Ao1000 = "Average of 1000: " + FormatTime(_sessionManager.CurrentSession.Ao1000);
+        }
+        
+        // update statistics that can be seen on-screen
+        public void PublishSolve()
+        {
+            _time = Math.Round(_timer.Elapsed.TotalSeconds, 2);
+            Solve currentSolve = new Solve();
+            currentSolve.Scramble = Scramble;
+            currentSolve.Time = _time;
+            currentSolve.Penalty = _penalty;
+            currentSolve.Timestamp = (DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1))).TotalSeconds;
+            _sessionManager.Publish(currentSolve);
+            UpdatePageStats();
         }
 
         // format seconds into a standard time format
