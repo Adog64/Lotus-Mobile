@@ -46,7 +46,7 @@
                 </StackLayout>
             </Grid>
             <Label/>
-            <controls:NumberedListView Margin="185,20,0,0" ItemsSource="{Binding Solves}" SeparatorVisibility="None" TextColor="{StaticResource Primary}"/>
+            <controls:NumberedListView Margin="0,20,0,0" ItemsSource="{Binding Solves}" SeparatorVisibility="None" Increasing="False" TextColor="{StaticResource Primary}"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

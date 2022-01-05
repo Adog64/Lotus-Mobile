@@ -13,6 +13,7 @@ namespace Lotus_Timer.Controls
     {
         public static readonly BindableProperty TextColorProperty = BindableProperty.Create("TextColor", typeof(Color), typeof(NumberedListView), Color.White, BindingMode.TwoWay);
 
+        public bool Increasing { get; set; }
         public Color TextColor { get; set; }
         protected override Cell CreateDefault(object item)
         {
@@ -27,7 +28,10 @@ namespace Lotus_Timer.Controls
             grid.ColumnDefinitions.Add(c0);
             grid.ColumnSpacing = 10;
             Label number = new Label();
-            number.Text = (index + 1).ToString() + '.';
+            if (Increasing)
+                number.Text = (index + 1).ToString() + '.';
+            else
+                number.Text = (items.Count - index).ToString() + '.';
             number.FontAttributes = FontAttributes.Bold;
             number.TextColor = TextColor;
             number.HorizontalOptions = LayoutOptions.End;

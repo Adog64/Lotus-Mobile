@@ -8,7 +8,6 @@ namespace Lotus_Timer.ViewModels
     public class StatsViewModel : BaseViewModel
     {
         protected string _best, _worst, _ao5, _ao12, _ao100, _ao1000;
-
         public string Best
         {
             get { return _best; }
@@ -40,17 +39,17 @@ namespace Lotus_Timer.ViewModels
             set { SetProperty(ref _ao1000, String.Copy(value)); }
         }
 
-        public StatsViewModel()
-        {
-            SessionManager.Load();
-            UpdatePageStats();
-        }
 
         public List<Solve> Solves
         {
             get { return SessionManager.CurrentSession.Solves; }
         }
 
+        public StatsViewModel()
+        {
+            SessionManager.Load();
+            UpdatePageStats();
+        }
         public void UpdatePageStats()
         {
             SessionManager.UpdateSessionStats();
