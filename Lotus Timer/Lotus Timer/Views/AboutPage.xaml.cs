@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using Lotus_Timer.ViewModels;
 
 namespace Lotus_Timer.Views
 {
@@ -14,6 +15,7 @@ namespace Lotus_Timer.Views
     {
         public AboutPage()
         {
+            BindingContext = new AboutViewModel();
             InitializeComponent();
         }
     }

@@ -12,5 +12,5 @@
     <local:TimerPage IconImageSource="TimerIcon.png" Title=""/>
     <local:StatsPage IconImageSource="StatsIcon.png" Title=""/>
     <!--local:TrainerPage IconImageSource="TrainerIcon.png" Title=""/-->
-    <!--local:AboutPage IconImageSource="AboutIcon.png" Title=""/-->
+    <local:AboutPage IconImageSource="AboutIcon.png" Title=""/>
 </TabbedPage>
