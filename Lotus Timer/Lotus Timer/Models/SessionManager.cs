@@ -4,43 +4,44 @@ using System.Text;
 using System.IO;
 using Newtonsoft.Json;
 using Xamarin.Essentials;
+using System.Diagnostics;
 
 namespace Lotus_Timer.Models
 {
-    public class SessionManager
+    public static class SessionManager
     {
-        string fileName;
-        public List<Session> Sessions { get; set; } = new List<Session>();
-        public Session CurrentSession { get; set; }
-        public Solve LatestSolve { get; set; }
+        public static List<Session> Sessions { get; set; } = new List<Session>();
+        public static Session CurrentSession { get; set; }
+        public static Solve LatestSolve { get; set; }
 
-        public SessionManager()
+        public static string FileName = Path.Combine(FileSystem.AppDataDirectory, "sessions.json");
+        public static void Load()
         {
-
-            fileName = Path.Combine(FileSystem.AppDataDirectory, "sessions.json");
-            if (!File.Exists(fileName))
+            if (!File.Exists(FileName))
             {
                 AddSession("333");
                 CurrentSession = Sessions[0];
-                File.WriteAllText(fileName, JsonConvert.SerializeObject(Sessions));
+                File.WriteAllText(FileName, JsonConvert.SerializeObject(Sessions));
             }
             else
             {
-                Sessions = JsonConvert.DeserializeObject<List<Session>>(File.ReadAllText(fileName));
+                Sessions = JsonConvert.DeserializeObject<List<Session>>(File.ReadAllText(FileName));
                 CurrentSession = Sessions[0];
             }
-            LatestSolve = CurrentSession.Solves[CurrentSession.Solves.Count - 1];
+            if (CurrentSession.Solves.Count > 0)
+                LatestSolve = CurrentSession.Solves[0];
         }
 
-        public void Publish(Solve solve)
+        public static void Publish(Solve solve)
         {
-            CurrentSession.Solves.Add(solve);
+            if (solve.Time == 0)
+                return;
             LatestSolve = solve;
+            CurrentSession.Solves.Insert(0, LatestSolve);
             UpdateSessionStats();
-            File.WriteAllText(fileName, JsonConvert.SerializeObject(Sessions));
         }
 
-        public void UpdateSessionStats()
+        public static void UpdateSessionStats()
         {
             CurrentSession.Ao5 = GetAoN(5);
             CurrentSession.Ao12 = GetAoN(12);
@@ -64,20 +65,23 @@ namespace Lotus_Timer.Models
                         CurrentSession.Worst = s.Time + s.Penalty;
                 }
             }
+
+            // save session data
+            File.WriteAllText(FileName, JsonConvert.SerializeObject(Sessions));
         }
 
-        public double GetAoN(int n)
+        public static double GetAoN(int n)
         {
             if (n > CurrentSession.Solves.Count)
                 return 0;                                           // there is no average if n solves were not completed
             int buffer = (int)Math.Ceiling(n * 0.05);               // average is defined as the mean of the middle 90% of solves
-            buffer = buffer > 1 ? buffer : 1;                       // buffer must be at least 1
             List<Solve> lastNSolves = new List<Solve>();            // list of the last n solves
-            for (int i = CurrentSession.Solves.Count - n; i < CurrentSession.Solves.Count; i++)
+            for (int i = 0; i < n; i++)
                 lastNSolves.Add(CurrentSession.Solves[i]);
             int dnfs = 0;
             foreach (Solve s in lastNSolves)
                 dnfs += (s.Penalty == -1) ? 1 : 0;
+            Debug.WriteLine("DNFs: " + dnfs);
             if (dnfs > buffer)                                      // if the dnf account for more than 5% of solves, the average is conseidered a dnf
                 return -1;
 
@@ -92,7 +96,7 @@ namespace Lotus_Timer.Models
             return totalTime / (times.Count - (2 * buffer));        // return mean of middle 90%
         }
 
-        public void AddSession(string cubeType)
+        public static void AddSession(string cubeType)
         {
             Session session = new Session();
             session.CubeType = cubeType;
@@ -101,7 +105,7 @@ namespace Lotus_Timer.Models
             Sessions.Add(session);
         }
 
-        public void SetSession(int sessionID)
+        public static void SetSession(int sessionID)
         {
             CurrentSession = Sessions[sessionID];
         }

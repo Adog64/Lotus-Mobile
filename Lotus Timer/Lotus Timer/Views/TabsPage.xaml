@@ -4,13 +4,13 @@
             xmlns:local="clr-namespace:Lotus_Timer.Views"
             x:Class="Lotus_Timer.Views.TabsPage"
             xmlns:android="clr-namespace:Xamarin.Forms.PlatformConfiguration.AndroidSpecific;assembly=Xamarin.Forms.Core"
-            BackgroundColor="#9500E5"
+            BackgroundColor="{StaticResource Background}"
             android:TabbedPage.ToolbarPlacement="Bottom"
             android:TabbedPage.BarItemColor="White"
             android:TabbedPage.BarSelectedItemColor="White">  
     <!--Pages can be added as references or inline-->
     <local:TimerPage IconImageSource="TimerIcon.png" Title=""/>
     <local:StatsPage IconImageSource="StatsIcon.png" Title=""/>
-    <local:TrainerPage IconImageSource="TrainerIcon.png" Title=""/>
-    <local:AboutPage IconImageSource="AboutIcon.png" Title=""/>
+    <!--local:TrainerPage IconImageSource="TrainerIcon.png" Title=""/-->
+    <!--local:AboutPage IconImageSource="AboutIcon.png" Title=""/-->
 </TabbedPage>

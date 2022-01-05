@@ -1,12 +1,52 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls="clr-namespace:Lotus_Timer.Controls"
              x:Class="Lotus_Timer.Views.StatsPage">
     <ContentPage.Content>
         <StackLayout>
-            <Label Text="Stats Test Page"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+            <Label
+                Text="3x3"
+                FontSize="Title"
+                TextColor="White"
+                HorizontalOptions="CenterAndExpand"
+                VerticalOptions="Center"
+                />
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="150"/>
+                </Grid.ColumnDefinitions>
+                <StackLayout Grid.Column="0">
+                    <Label
+                        TextColor="{StaticResource Primary}"
+                        Text="{Binding Best}"
+                        HorizontalOptions="Center"/>
+                    <Label
+                        TextColor="{StaticResource Primary}"
+                        Text="{Binding Ao5}"
+                        HorizontalOptions="Center"/>
+                    <Label
+                        TextColor="{StaticResource Primary}"
+                        Text="{Binding Ao12}"
+                        HorizontalOptions="Center"/>
+                </StackLayout>
+                <StackLayout Grid.Column="1">
+                    <Label
+                        TextColor="{StaticResource Primary}"
+                        Text="{Binding Worst}"
+                        HorizontalOptions="Center"/>
+                    <Label
+                        TextColor="{StaticResource Primary}"
+                        Text="{Binding Ao100}"
+                        HorizontalOptions="Center"/>
+                    <Label
+                        TextColor="{StaticResource Primary}"
+                        Text="{Binding Ao1000}"
+                        HorizontalOptions="Center"/>
+                </StackLayout>
+            </Grid>
+            <Label/>
+            <controls:NumberedListView Margin="185,20,0,0" ItemsSource="{Binding Solves}" SeparatorVisibility="None" TextColor="{StaticResource Primary}"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

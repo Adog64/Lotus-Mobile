@@ -8,7 +8,7 @@ using System.Diagnostics;
 
 namespace Lotus_Timer.ViewModels
 {
-    public class TimerViewModel : BaseViewModel
+    public class TimerViewModel : StatsViewModel
     {
         public ICommand TimerButtonCommand { get; }
         public ICommand DnfCommand { get; }
@@ -17,14 +17,12 @@ namespace Lotus_Timer.ViewModels
         Stopwatch _timer;
         const double TICK = 0.01;
         float _progress;
-        bool _timeModifiers;
+        bool _showingTimeModifiers;
         sbyte _penalty;
         string _scramble;
         string _clockFace;
-        string _best, _worst, _ao5, _ao12, _ao100, _ao1000;
         Scrambler _scrambler;
         TimerState _timerState;
-        SessionManager _sessionManager;
         public string ClockFace
         {
             get { return _clockFace; }
@@ -39,40 +37,11 @@ namespace Lotus_Timer.ViewModels
             get { return _scramble; }
             set { SetProperty(ref _scramble, String.Copy(value)); }
         }   
-        public string Best
+        
+        public bool ShowingTimeModifiers
         {
-            get { return _best; }
-            set { SetProperty(ref _best, String.Copy(value)); }
-        }
-        public string Worst
-        {
-            get { return _worst; }
-            set { SetProperty(ref _worst, String.Copy(value)); }
-        }
-        public string Ao5
-        {
-            get { return _ao5; }
-            set { SetProperty(ref _ao5, String.Copy(value)); }
-        }
-        public string Ao12
-        {
-            get { return _ao12; }
-            set { SetProperty(ref _ao12, String.Copy(value)); }
-        }
-        public string Ao100
-        {
-            get { return _ao100; }
-            set { SetProperty(ref _ao100, String.Copy(value)); }
-        }
-        public string Ao1000
-        {
-            get { return _ao1000; }
-            set { SetProperty(ref _ao1000, String.Copy(value)); }
-        }
-        public bool TimeModifiers
-        {
-            get { return _timeModifiers; }
-            set { SetProperty(ref _timeModifiers, value); }
+            get { return _showingTimeModifiers; }
+            set { SetProperty(ref _showingTimeModifiers, value); }
         }
 
         public enum TimerState
@@ -89,12 +58,11 @@ namespace Lotus_Timer.ViewModels
             _scrambler = new Scrambler("333");
             _time = 0;
             _penalty = 0;
-            _timeModifiers = false;
+            _showingTimeModifiers = false;
             _timer = new Stopwatch();
-            _sessionManager = new SessionManager();
             _progress = 1;
             _timerState = TimerState.READY;
-            PublishSolve();
+            //PublishSolve();
             ClockFace = "Ready";
             Scramble = _scrambler.generateScramble();
             TimerButtonCommand = new Command(() => Next());
@@ -116,12 +84,12 @@ namespace Lotus_Timer.ViewModels
                 case TimerState.TIMING:
                     _timer.Stop();
                     _timerState = TimerState.STOPPED;
-                    TimeModifiers = true;
+                    ShowingTimeModifiers = true;
                     PublishSolve();
                     break;
                 case TimerState.STOPPED:
                     ClockFace = "Ready";
-                    TimeModifiers = false;
+                    ShowingTimeModifiers = false;
                     Progress = 1;
                     Scramble = _scrambler.generateScramble();
                     _timerState = TimerState.READY;
@@ -176,29 +144,18 @@ namespace Lotus_Timer.ViewModels
         public void Dnf()
         {
             _penalty = _penalty != -1 ? (sbyte)-1 : (sbyte)0;
-            Solve currentSolve = _sessionManager.LatestSolve;
-            currentSolve.Penalty = _penalty;
+            SessionManager.LatestSolve.Penalty = _penalty;
+            ClockFace = SessionManager.LatestSolve.ToString();
             UpdatePageStats();
         }
         public void Plus2()
         {
             _penalty = _penalty != 2 ? (sbyte)2 : (sbyte)0;
-            Solve currentSolve = _sessionManager.LatestSolve;
-            currentSolve.Penalty = _penalty;
+            SessionManager.LatestSolve.Penalty = _penalty;
+            ClockFace = SessionManager.LatestSolve.ToString();
             UpdatePageStats();
         }
 
-        public void UpdatePageStats()
-        {
-            _sessionManager.UpdateSessionStats();
-            ClockFace = _penalty == 0 ? FormatTime(_time) : (_penalty == -1) ? "dnf" : (FormatTime(_time) + "+2");
-            Best = "Best: " + FormatTime(_sessionManager.CurrentSession.Best);
-            Worst = "Worst: " + FormatTime(_sessionManager.CurrentSession.Worst);
-            Ao5 = "Average of 5: " + FormatTime(_sessionManager.CurrentSession.Ao5);
-            Ao12 = "Average of 12: " + FormatTime(_sessionManager.CurrentSession.Ao12);
-            Ao100 = "Average of 100: " + FormatTime(_sessionManager.CurrentSession.Ao100);
-            Ao1000 = "Average of 1000: " + FormatTime(_sessionManager.CurrentSession.Ao1000);
-        }
         
         // update statistics that can be seen on-screen
         public void PublishSolve()
@@ -209,20 +166,9 @@ namespace Lotus_Timer.ViewModels
             currentSolve.Time = _time;
             currentSolve.Penalty = _penalty;
             currentSolve.Timestamp = (DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1))).TotalSeconds;
-            _sessionManager.Publish(currentSolve);
+            SessionManager.Publish(currentSolve);
+            ClockFace = SessionManager.LatestSolve.ToString();
             UpdatePageStats();
-        }
-
-        // format seconds into a standard time format
-        public string FormatTime(double seconds)
-        {
-            if (seconds <= 0)
-                return "-.-";
-            if (TimeSpan.FromSeconds(seconds).Hours > 0)
-                return TimeSpan.FromSeconds(seconds).ToString(@"%h\:mm\:ss\.ff");
-            if (TimeSpan.FromSeconds(seconds).Minutes > 0)
-                return TimeSpan.FromSeconds(seconds).ToString(@"%m\:ss\.ff");
-            return TimeSpan.FromSeconds(seconds).ToString(@"%s\.ff");
         }
 
         // private class for quickly generating scrambles
@@ -321,8 +267,9 @@ namespace Lotus_Timer.ViewModels
                 {
                     scramblePrototype.Add(moveSet[random.Next(moveSet.Count)]);
 
-                    // basically dont do 2 of the same move in a row (Ex. U followed by U2)
-                    while (i > 0 && scramblePrototype[i - 1] == scramblePrototype[i])
+                    // make sure you aren't doing nothing (Ex. U followed by U2 or U, D, U')
+                    while ((i > 0 && scramblePrototype[i - 1] == scramblePrototype[i]) 
+                         || i > 1 && scramblePrototype[i - 2] == scramblePrototype[i] && scramblePrototype[i - 1] == moveSet[(moveSet.IndexOf(scramblePrototype[i]) + 3) % 6])
                         scramblePrototype[i] = moveSet[random.Next(moveSet.Count)];
                 }
 
