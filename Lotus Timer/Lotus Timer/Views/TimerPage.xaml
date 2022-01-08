@@ -7,10 +7,11 @@
              Title="{Binding Title}">
 
     <ContentPage.Content>
-        <StackLayout>
+        <StackLayout CompressedLayout.IsHeadless="False">
             <Label
                 Text="{Binding Scramble}"
                 HorizontalTextAlignment="Center"
+                Opacity="{Binding ShowingScramble}"
                 Padding="8"
                 TextColor="{StaticResource Primary}"
                 FontSize="14"
@@ -46,14 +47,14 @@
                     Grid.Column="1"
                     Command="{Binding Plus2Command}"
                     TextColor="{StaticResource Background}"
-                    IsVisible="{Binding ShowingTimeModifiers}"
+                    Opacity="{Binding ShowingTimeModifiers}"
                     IsEnabled="{Binding ShowingTimeModifiers}"/>
                 <Button
                     Grid.Column="2"
                     Text="dnf"
                     Command="{Binding DnfCommand}"
                     TextColor="{StaticResource Background}"
-                    IsVisible="{Binding ShowingTimeModifiers}"
+                    Opacity="{Binding ShowingTimeModifiers}"
                     IsEnabled="{Binding ShowingTimeModifiers}"/>
                 <Label/>
             </Grid>
