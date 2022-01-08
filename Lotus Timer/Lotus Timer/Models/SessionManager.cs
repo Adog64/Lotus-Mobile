@@ -13,6 +13,7 @@ namespace Lotus_Timer.Models
         public static List<Session> Sessions { get; set; } = new List<Session>();
         public static Session CurrentSession { get; set; }
         public static Solve LatestSolve { get; set; }
+        public static bool Refreshed { get; set; } = false;
 
         public static string FileName = Path.Combine(FileSystem.AppDataDirectory, "sessions.json");
         public static void Load()
@@ -30,6 +31,7 @@ namespace Lotus_Timer.Models
             }
             if (CurrentSession.Solves.Count > 0)
                 LatestSolve = CurrentSession.Solves[0];
+            Refreshed = true;
         }
 
         public static void Publish(Solve solve)
@@ -38,6 +40,13 @@ namespace Lotus_Timer.Models
                 return;
             LatestSolve = solve;
             CurrentSession.Solves.Insert(0, LatestSolve);
+            UpdateSessionStats();
+        }
+
+        public static void DeleteFromCurrent(int solveIndex)
+        {
+            Debug.WriteLine("Removing time at index " + solveIndex);
+            CurrentSession.Solves.RemoveAt(solveIndex);
             UpdateSessionStats();
         }
 
@@ -68,6 +77,8 @@ namespace Lotus_Timer.Models
 
             // save session data
             File.WriteAllText(FileName, JsonConvert.SerializeObject(Sessions));
+            Refreshed = false;
+            Debug.WriteLine("Session changed, refresh session stats page");
         }
 
         public static double GetAoN(int n)
@@ -81,7 +92,6 @@ namespace Lotus_Timer.Models
             int dnfs = 0;
             foreach (Solve s in lastNSolves)
                 dnfs += (s.Penalty == -1) ? 1 : 0;
-            Debug.WriteLine("DNFs: " + dnfs);
             if (dnfs > buffer)                                      // if the dnf account for more than 5% of solves, the average is conseidered a dnf
                 return -1;
 

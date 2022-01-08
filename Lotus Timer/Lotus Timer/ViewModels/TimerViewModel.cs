@@ -18,11 +18,18 @@ namespace Lotus_Timer.ViewModels
         const double TICK = 0.01;
         float _progress;
         bool _showingTimeModifiers;
+        bool _showingScramble;
         sbyte _penalty;
         string _scramble;
         string _clockFace;
         Scrambler _scrambler;
         TimerState _timerState;
+
+        public bool ShowingScramble
+        {
+            get { return _showingScramble; }
+            private set { SetProperty<bool>(ref _showingScramble, value); }
+        }
         public string ClockFace
         {
             get { return _clockFace; }
@@ -62,7 +69,7 @@ namespace Lotus_Timer.ViewModels
             _timer = new Stopwatch();
             _progress = 1;
             _timerState = TimerState.READY;
-            //PublishSolve();
+            ShowingScramble = true;
             ClockFace = "Ready";
             Scramble = _scrambler.generateScramble();
             TimerButtonCommand = new Command(() => Next());
@@ -89,6 +96,7 @@ namespace Lotus_Timer.ViewModels
                     break;
                 case TimerState.STOPPED:
                     ClockFace = "Ready";
+                    ShowingScramble = true;
                     ShowingTimeModifiers = false;
                     Progress = 1;
                     Scramble = _scrambler.generateScramble();
@@ -103,7 +111,7 @@ namespace Lotus_Timer.ViewModels
             _timerState = TimerState.INSPECTION;
             Progress = 1;
             _time = 15;                     // length of inpection
-            Scramble = "";                  // make scramble invisible
+            ShowingScramble = false;        // stop showing scramble
             ClockFace = _time.ToString();   // update display on timer
                                             // start inspection timer
             Device.StartTimer(TimeSpan.FromSeconds(TICK), () =>
@@ -162,7 +170,7 @@ namespace Lotus_Timer.ViewModels
         {
             _time = Math.Round(_timer.Elapsed.TotalSeconds, 2);
             Solve currentSolve = new Solve();
-            currentSolve.Scramble = Scramble;
+            currentSolve.Scramble = _scramble;
             currentSolve.Time = _time;
             currentSolve.Penalty = _penalty;
             currentSolve.Timestamp = (DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1))).TotalSeconds;

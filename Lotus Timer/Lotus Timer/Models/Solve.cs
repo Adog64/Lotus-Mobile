@@ -18,11 +18,14 @@ namespace Lotus_Timer.Models
                 return "DNF";
             if (Time == 0)
                 return "-.-";
+            string s;
             if (TimeSpan.FromSeconds(Time + Penalty).Hours > 0)
-                return TimeSpan.FromSeconds(Time + Penalty).ToString(@"%h\:mm\:ss\.ff");
-            if (TimeSpan.FromSeconds(Time + Penalty).Minutes > 0)
-                return TimeSpan.FromSeconds(Time + Penalty).ToString(@"%m\:ss\.ff");
-            return TimeSpan.FromSeconds(Time + Penalty).ToString(@"%s\.ff");
+                s = TimeSpan.FromSeconds(Time + Penalty).ToString(@"%h\:mm\:ss\.ff");
+            else if (TimeSpan.FromSeconds(Time + Penalty).Minutes > 0)
+                s = TimeSpan.FromSeconds(Time + Penalty).ToString(@"%m\:ss\.ff");
+            else
+                s = TimeSpan.FromSeconds(Time + Penalty).ToString(@"%s\.ff");
+            return (Penalty == 0) ? s : s + "(+2)";
         }
 
     }

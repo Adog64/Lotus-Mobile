@@ -7,46 +7,61 @@
         <StackLayout>
             <Label
                 Text="3x3"
+                FontAttributes="Bold"
                 FontSize="Title"
-                TextColor="White"
+                TextColor="{StaticResource Primary}"
                 HorizontalOptions="CenterAndExpand"
                 VerticalOptions="Center"
                 />
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="150"/>
-                </Grid.ColumnDefinitions>
-                <StackLayout Grid.Column="0">
-                    <Label
-                        TextColor="{StaticResource Primary}"
+            <Frame CornerRadius="10" BackgroundColor="{StaticResource Foreground}" Margin="20,0,20,0" HasShadow="False" Padding="10" HeightRequest="90">
+                <Grid VerticalOptions="Center">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="145"/>
+                    </Grid.ColumnDefinitions>
+                    <StackLayout>
+                        <Label
+                        FontSize="14"
                         Text="{Binding Best}"
-                        HorizontalOptions="Center"/>
-                    <Label
-                        TextColor="{StaticResource Primary}"
+                        FontAttributes="Bold"
+                        TextColor="{StaticResource Accent}"
+                        HorizontalTextAlignment="End"
+                        HorizontalOptions="Start"/>
+                        <Label
+                        FontSize="14"
                         Text="{Binding Ao5}"
-                        HorizontalOptions="Center"/>
-                    <Label
-                        TextColor="{StaticResource Primary}"
+                        FontAttributes="Bold"
+                        TextColor="{StaticResource Accent}"
+                        HorizontalOptions="Start"/>
+                        <Label
+                        FontSize="14"
                         Text="{Binding Ao12}"
-                        HorizontalOptions="Center"/>
-                </StackLayout>
-                <StackLayout Grid.Column="1">
-                    <Label
-                        TextColor="{StaticResource Primary}"
+                        FontAttributes="Bold"
+                        TextColor="{StaticResource Accent}"
+                        HorizontalOptions="Start"/>
+                    </StackLayout>
+                    <StackLayout Grid.Column="1">
+                        <Label
+                        FontSize="14"
                         Text="{Binding Worst}"
-                        HorizontalOptions="Center"/>
-                    <Label
-                        TextColor="{StaticResource Primary}"
+                        FontAttributes="Bold"
+                        TextColor="{StaticResource Accent}"
+                        HorizontalOptions="Start"/>
+                        <Label
+                        FontSize="14"
                         Text="{Binding Ao100}"
-                        HorizontalOptions="Center"/>
-                    <Label
-                        TextColor="{StaticResource Primary}"
+                        FontAttributes="Bold"
+                        TextColor="{StaticResource Accent}"
+                        HorizontalOptions="Start"/>
+                        <Label
+                        FontSize="14"
                         Text="{Binding Ao1000}"
-                        HorizontalOptions="Center"/>
-                </StackLayout>
-            </Grid>
-            <Label/>
-            <controls:NumberedListView Margin="0,20,0,0" ItemsSource="{Binding Solves}" SeparatorVisibility="None" Increasing="False" TextColor="{StaticResource Primary}"/>
+                        FontAttributes="Bold"
+                        TextColor="{StaticResource Accent}"
+                        HorizontalOptions="Start"/>
+                    </StackLayout>
+                </Grid>
+            </Frame>
+            <controls:NumberedListView Margin="0,20,0,20" ItemsSource="{Binding Solves}" SeparatorVisibility="None" Increasing="False" TextColor="{StaticResource Primary}" ItemSelected="OpenSolvePage"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

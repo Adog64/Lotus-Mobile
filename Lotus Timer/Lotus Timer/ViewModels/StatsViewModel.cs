@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Diagnostics;
 using Lotus_Timer.Models;
 
 namespace Lotus_Timer.ViewModels
@@ -55,17 +56,17 @@ namespace Lotus_Timer.ViewModels
             SessionManager.UpdateSessionStats();
             Best = "Best: " + FormatTime(SessionManager.CurrentSession.Best);
             Worst = "Worst: " + FormatTime(SessionManager.CurrentSession.Worst);
-            Ao5 = "Average of 5: " + FormatTime(SessionManager.CurrentSession.Ao5);
-            Ao12 = "Average of 12: " + FormatTime(SessionManager.CurrentSession.Ao12);
-            Ao100 = "Average of 100: " + FormatTime(SessionManager.CurrentSession.Ao100);
-            Ao1000 = "Average of 1000: " + FormatTime(SessionManager.CurrentSession.Ao1000);
+            Ao5 = "Ao5: " + FormatTime(SessionManager.CurrentSession.Ao5);
+            Ao12 = "Ao12: " + FormatTime(SessionManager.CurrentSession.Ao12);
+            Ao100 = "Ao100: " + FormatTime(SessionManager.CurrentSession.Ao100);
+            Ao1000 = "Ao1000: " + FormatTime(SessionManager.CurrentSession.Ao1000);
         }
 
         // format seconds into a standard time format
         public string FormatTime(double time)
         {
             if (time == -1)
-                return "dnf";
+                return "DNF";
             if (time == 0)
                 return "-.-";
             if (TimeSpan.FromSeconds(time).Hours > 0)
@@ -73,6 +74,18 @@ namespace Lotus_Timer.ViewModels
             if (TimeSpan.FromSeconds(time).Minutes > 0)
                 return TimeSpan.FromSeconds(time).ToString(@"%m\:ss\.ff");
             return TimeSpan.FromSeconds(time).ToString(@"%s\.ff");
+        }
+
+        public void Refresh()
+        {
+            Debug.WriteLine("Checking for refresh...");
+            if (!SessionManager.Refreshed)
+            {
+                Debug.WriteLine("Refreshing stats...");
+                SessionManager.Load();
+                UpdatePageStats();
+                OnPropertyChanged("Solves");
+            }
         }
     }
 }

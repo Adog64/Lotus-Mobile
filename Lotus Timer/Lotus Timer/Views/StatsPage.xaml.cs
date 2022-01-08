@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+using System.Diagnostics;
 using System.Threading.Tasks;
 using Lotus_Timer.ViewModels;
+using Lotus_Timer.Controls;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using Lotus_Timer.Models;
 
 namespace Lotus_Timer.Views
 {
@@ -20,7 +22,16 @@ namespace Lotus_Timer.Views
 
         protected override void OnAppearing()
         {
-            BindingContext = new StatsViewModel();
+            ((StatsViewModel)BindingContext).Refresh();
+        }
+
+        private async void OpenSolvePage(object sender, EventArgs e)
+        {
+            if (e.GetType() == typeof(SelectedItemChangedEventArgs))
+            {
+                int item = ((SelectedItemChangedEventArgs)e).SelectedItemIndex;
+                await Navigation.PushModalAsync(new SolvePage(item));
+            }
         }
     }
 }
