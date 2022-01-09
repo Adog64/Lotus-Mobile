@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ResourceDictionary xmlns="http://xamarin.com/schemas/2014/forms"
+ xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+ x:Class="Lotus_Timer.ThemeResources.DarkTheme">
+    <Color x:Key="Primary">#E0E0E5</Color>
+    <Color x:Key="Background">#303030</Color>
+    <Color x:Key="Foreground">#404040</Color>
+    <Color x:Key="Accent">#E0E0E5</Color>
+</ResourceDictionary>

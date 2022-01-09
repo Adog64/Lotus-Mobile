@@ -6,39 +6,9 @@
         Define global resources and styles here, that apply to all pages in your app.
     -->
     <Application.Resources>
-        <ResourceDictionary>
-            <Color x:Key="Primary">#FFFFFF</Color>
-            <Color x:Key="Background">#9500E5</Color>
-            <Color x:Key="Foreground">#B530F5</Color>
-            <Color x:Key="Accent">#FFFFFF</Color>
-            <!--Color x:Key="Primary">#E0E0E5</Color>
-            <Color x:Key="Background">#303030</Color>
-            <Color x:Key="Foreground">#404040</Color>
-            <Color x:Key="Accent">#E0E0E5</Color>
-            <Color x:Key="Panel">#505050</Color>
-            <Color x:Key="Primary">#08FFB0</Color>
-            <Color x:Key="Background">#261D45</Color>
-            <Color x:Key="Foreground">#100D23</Color>
-            <Color x:Key="Accent">#08FFB0</Color-->
-                <Style TargetType="Button">
-                <Setter Property="TextColor" Value="White"></Setter>
-                <Setter Property="VisualStateManager.VisualStateGroups">
-                    <VisualStateGroupList>
-                        <VisualStateGroup x:Name="CommonStates">
-                            <VisualState x:Name="Normal">
-                                <VisualState.Setters>
-                                    <Setter Property="BackgroundColor" Value="{StaticResource Primary}" />
-                                </VisualState.Setters>
-                            </VisualState>
-                            <VisualState x:Name="Disabled">
-                                <VisualState.Setters>
-                                    <Setter Property="BackgroundColor" Value="White" />
-                                </VisualState.Setters>
-                            </VisualState>
-                        </VisualStateGroup>
-                    </VisualStateGroupList>
-                </Setter>
-            </Style>
-        </ResourceDictionary>        
+        <ResourceDictionary Source="ThemeResources/DarkTheme.xaml" />
+
+        <!-- Layouts and UI Control Styles will go here-->
+
     </Application.Resources>
 </Application>

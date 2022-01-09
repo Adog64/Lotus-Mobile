@@ -9,11 +9,11 @@
                 Text="3x3"
                 FontAttributes="Bold"
                 FontSize="Title"
-                TextColor="{StaticResource Primary}"
+                TextColor="{DynamicResource Primary}"
                 HorizontalOptions="CenterAndExpand"
                 VerticalOptions="Center"
                 />
-            <Frame CornerRadius="10" BackgroundColor="{StaticResource Foreground}" Margin="20,0,20,0" HasShadow="False" Padding="10" HeightRequest="90">
+            <Frame CornerRadius="10" BackgroundColor="{DynamicResource Foreground}" Margin="20,0,20,0" HasShadow="False" Padding="10" HeightRequest="90">
                 <Grid VerticalOptions="Center">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="145"/>
@@ -23,20 +23,20 @@
                         FontSize="14"
                         Text="{Binding Best}"
                         FontAttributes="Bold"
-                        TextColor="{StaticResource Accent}"
+                        TextColor="{DynamicResource Accent}"
                         HorizontalTextAlignment="End"
                         HorizontalOptions="Start"/>
                         <Label
                         FontSize="14"
                         Text="{Binding Ao5}"
                         FontAttributes="Bold"
-                        TextColor="{StaticResource Accent}"
+                        TextColor="{DynamicResource Accent}"
                         HorizontalOptions="Start"/>
                         <Label
                         FontSize="14"
                         Text="{Binding Ao12}"
                         FontAttributes="Bold"
-                        TextColor="{StaticResource Accent}"
+                        TextColor="{DynamicResource Accent}"
                         HorizontalOptions="Start"/>
                     </StackLayout>
                     <StackLayout Grid.Column="1">
@@ -44,24 +44,24 @@
                         FontSize="14"
                         Text="{Binding Worst}"
                         FontAttributes="Bold"
-                        TextColor="{StaticResource Accent}"
+                        TextColor="{DynamicResource Accent}"
                         HorizontalOptions="Start"/>
                         <Label
                         FontSize="14"
                         Text="{Binding Ao100}"
                         FontAttributes="Bold"
-                        TextColor="{StaticResource Accent}"
+                        TextColor="{DynamicResource Accent}"
                         HorizontalOptions="Start"/>
                         <Label
                         FontSize="14"
                         Text="{Binding Ao1000}"
                         FontAttributes="Bold"
-                        TextColor="{StaticResource Accent}"
+                        TextColor="{DynamicResource Accent}"
                         HorizontalOptions="Start"/>
                     </StackLayout>
                 </Grid>
             </Frame>
-            <controls:NumberedListView Margin="0,20,0,20" ItemsSource="{Binding Solves}" SeparatorVisibility="None" Increasing="False" TextColor="{StaticResource Primary}" ItemSelected="OpenSolvePage"/>
+            <controls:NumberedListView Margin="0,20,0,20" ItemsSource="{Binding Solves}" SeparatorVisibility="None" Increasing="False" TextColor="{DynamicResource Primary}" ItemSelected="OpenSolvePage"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

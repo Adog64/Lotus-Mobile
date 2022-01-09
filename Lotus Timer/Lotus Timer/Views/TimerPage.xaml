@@ -13,7 +13,7 @@
                 HorizontalTextAlignment="Center"
                 Opacity="{Binding ShowingScramble}"
                 Padding="8"
-                TextColor="{StaticResource Primary}"
+                TextColor="{DynamicResource Primary}"
                 FontSize="14"
                 VerticalOptions="EndAndExpand"
                 HorizontalOptions="Center"
@@ -22,7 +22,7 @@
                 <Button
                 Text="{Binding ClockFace}"
                 FontSize="50"
-                TextColor="{StaticResource Primary}"
+                TextColor="{DynamicResource Primary}"
                 BackgroundColor="#00ffffff"
                 Command="{Binding TimerButtonCommand}"
                 WidthRequest="300"
@@ -31,8 +31,8 @@
                 HorizontalOptions="CenterAndExpand"/>
             <controls:CircleCountdown
                 Progress="{Binding Progress}"
-                ProgressStartColor="{StaticResource Primary}"
-                ProgressEndColor="{StaticResource Primary}"
+                ProgressStartColor="{DynamicResource Primary}"
+                ProgressEndColor="{DynamicResource Primary}"
                 StrokeWidth="12"/>
             </Grid>
             <Grid VerticalOptions="End">
@@ -46,19 +46,19 @@
                     Text="+2"
                     Grid.Column="1"
                     Command="{Binding Plus2Command}"
-                    TextColor="{StaticResource Background}"
+                    TextColor="{DynamicResource Background}"
                     Opacity="{Binding ShowingTimeModifiers}"
                     IsEnabled="{Binding ShowingTimeModifiers}"/>
                 <Button
                     Grid.Column="2"
                     Text="dnf"
                     Command="{Binding DnfCommand}"
-                    TextColor="{StaticResource Background}"
+                    TextColor="{DynamicResource Background}"
                     Opacity="{Binding ShowingTimeModifiers}"
                     IsEnabled="{Binding ShowingTimeModifiers}"/>
                 <Label/>
             </Grid>
-            <Frame VerticalOptions="EndAndExpand" CornerRadius="10" BackgroundColor="{StaticResource Foreground}" Margin="20,0,20,30" HasShadow="False" Padding="10">
+            <Frame VerticalOptions="EndAndExpand" CornerRadius="10" BackgroundColor="{DynamicResource Foreground}" Margin="20,0,20,30" HasShadow="False" Padding="10">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="145"/>
@@ -68,20 +68,20 @@
                         FontSize="14"
                         Text="{Binding Best}"
                         FontAttributes="Bold"
-                        TextColor="{StaticResource Accent}"
+                        TextColor="{DynamicResource Accent}"
                         HorizontalTextAlignment="End"
                         HorizontalOptions="Start"/>
                         <Label
                         FontSize="14"
                         Text="{Binding Ao5}"
                         FontAttributes="Bold"
-                        TextColor="{StaticResource Accent}"
+                        TextColor="{DynamicResource Accent}"
                         HorizontalOptions="Start"/>
                         <Label
                         FontSize="14"
                         Text="{Binding Ao12}"
                         FontAttributes="Bold"
-                        TextColor="{StaticResource Accent}"
+                        TextColor="{DynamicResource Accent}"
                         HorizontalOptions="Start"/>
                     </StackLayout>
                     <StackLayout Grid.Column="1">
@@ -89,19 +89,19 @@
                         FontSize="14"
                         Text="{Binding Worst}"
                         FontAttributes="Bold"
-                        TextColor="{StaticResource Accent}"
+                        TextColor="{DynamicResource Accent}"
                         HorizontalOptions="Start"/>
                         <Label
                         FontSize="14"
                         Text="{Binding Ao100}"
                         FontAttributes="Bold"
-                        TextColor="{StaticResource Accent}"
+                        TextColor="{DynamicResource Accent}"
                         HorizontalOptions="Start"/>
                         <Label
                         FontSize="14"
                         Text="{Binding Ao1000}"
                         FontAttributes="Bold"
-                        TextColor="{StaticResource Accent}"
+                        TextColor="{DynamicResource Accent}"
                         HorizontalOptions="Start"/>
                     </StackLayout>
                 </Grid>
