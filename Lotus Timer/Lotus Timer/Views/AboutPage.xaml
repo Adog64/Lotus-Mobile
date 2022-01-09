@@ -22,15 +22,16 @@
                 Text="       The Lotus Mobile Project started in December 2021 to fill a gap in cubing software. At the time, there were very few quality cubing timers. And the ones that were quality were primarily aimed towards desktop users."/>
             <Label
                 Text="Join Our Discord!"
-                Margin="0, 350, 0 ,0"
                 TextColor="{StaticResource Primary}"
-                HorizontalOptions="CenterAndExpand"/>
+                HorizontalOptions="CenterAndExpand"
+                VerticalOptions="EndAndExpand"/>
             <ImageButton
                 Source="DiscordIcon.png"
                 Command="{Binding DiscordCommand}"
                 HorizontalOptions="Center"
                 HeightRequest="40"
                 CornerRadius="8"
+                Margin="0,0,0,40"
                 BackgroundColor="#FFFFFF"/>
         </StackLayout>
     </ContentPage.Content>

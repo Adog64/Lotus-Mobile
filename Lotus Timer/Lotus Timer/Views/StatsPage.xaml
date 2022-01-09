@@ -4,7 +4,7 @@
              xmlns:controls="clr-namespace:Lotus_Timer.Controls"
              x:Class="Lotus_Timer.Views.StatsPage">
     <ContentPage.Content>
-        <StackLayout>
+        <StackLayout Spacing="10">
             <Label
                 Text="3x3"
                 FontAttributes="Bold"
@@ -13,8 +13,8 @@
                 HorizontalOptions="CenterAndExpand"
                 VerticalOptions="Center"
                 />
-            <Frame CornerRadius="10" BackgroundColor="{DynamicResource Foreground}" Margin="20,0,20,0" HasShadow="False" Padding="10" HeightRequest="90">
-                <Grid VerticalOptions="Center">
+            <Frame VerticalOptions="StartAndExpand" CornerRadius="10" BackgroundColor="{DynamicResource Foreground}" Margin="20,0,20,0" HasShadow="False" Padding="10">
+                <Grid VerticalOptions="EndAndExpand">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="145"/>
                     </Grid.ColumnDefinitions>
@@ -61,7 +61,7 @@
                     </StackLayout>
                 </Grid>
             </Frame>
-            <controls:NumberedListView Margin="0,20,0,20" ItemsSource="{Binding Solves}" SeparatorVisibility="None" Increasing="False" TextColor="{DynamicResource Primary}" ItemSelected="OpenSolvePage"/>
+            <controls:NumberedListView Margin="0,0,0,20" ItemsSource="{Binding Solves}" SeparatorVisibility="None" Increasing="False" TextColor="{DynamicResource Primary}" ItemSelected="OpenSolvePage" HeightRequest="500"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
