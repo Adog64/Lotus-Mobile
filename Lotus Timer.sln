@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31912.275
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lotus Timer.Android", "Lotus Timer\Lotus Timer.Android\Lotus Timer.Android.csproj", "{1D4699E1-E0AF-4E18-B3CD-AC8D73197502}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LotusTimer.Android", "Lotus Timer\Lotus Timer.Android\LotusTimer.Android.csproj", "{1D4699E1-E0AF-4E18-B3CD-AC8D73197502}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lotus Timer.iOS", "Lotus Timer\Lotus Timer.iOS\Lotus Timer.iOS.csproj", "{A586733D-06C7-42BF-830F-8234D5A902A3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LotusTimer.iOS", "Lotus Timer\Lotus Timer.iOS\LotusTimer.iOS.csproj", "{A586733D-06C7-42BF-830F-8234D5A902A3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lotus Timer", "Lotus Timer\Lotus Timer\Lotus Timer.csproj", "{00EC7085-F5FD-4B9A-9216-9FD8B58209DE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LotusTimer", "Lotus Timer\Lotus Timer\LotusTimer.csproj", "{00EC7085-F5FD-4B9A-9216-9FD8B58209DE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
