@@ -1,5 +1,5 @@
 # Lotus-Mobile
-Mobile cubing timer designed to be as simple as possible
+A mobile cubing timer designed to be as simple as possible
 
 ### The PB Scramble
 
