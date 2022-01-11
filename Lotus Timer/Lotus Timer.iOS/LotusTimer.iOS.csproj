@@ -139,18 +139,18 @@
     <BundleResource Include="Resources\icon.png" />
   </ItemGroup>
   <ItemGroup>
+    <BundleResource Include="Resources\DiscordIcon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\TimerIcon.png" />
+  </ItemGroup>
+  <ItemGroup>
     <BundleResource Include="Resources\TrainerIcon.png" />
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\AboutIcon.png" />
   </ItemGroup>
   <ItemGroup>
-    <BundleResource Include="Resources\DiscordIcon.png" />
-  </ItemGroup>
-  <ItemGroup>
     <BundleResource Include="Resources\StatsIcon.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\TimerIcon.png" />
   </ItemGroup>
 </Project>
