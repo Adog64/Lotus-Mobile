@@ -14,6 +14,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="ThemeResources\LotusBrightTheme.xaml.cs">
+      <DependentUpon>LotusBrightTheme.xaml</DependentUpon>
+    </Compile>
     <Compile Update="Views\TabsPage.xaml.cs">
       <DependentUpon>TabsPage.xaml</DependentUpon>
     </Compile>

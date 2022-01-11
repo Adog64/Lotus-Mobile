@@ -7,7 +7,7 @@
              Title="{Binding Title}">
 
     <ContentPage.Content>
-        <StackLayout CompressedLayout.IsHeadless="False">
+        <StackLayout CompressedLayout.IsHeadless="False" BackgroundColor="{DynamicResource Background}">
             <Label
                 Text="{Binding Scramble}"
                 HorizontalTextAlignment="Center"
@@ -19,39 +19,37 @@
                 HorizontalOptions="Center"
                 />
             <Grid VerticalOptions="EndAndExpand"> 
-                <Button
-                Text="{Binding ClockFace}"
-                FontSize="50"
-                TextColor="{DynamicResource Primary}"
-                BackgroundColor="#00ffffff"
-                Command="{Binding TimerButtonCommand}"
-                WidthRequest="300"
-                HeightRequest="300"
-                VerticalOptions="CenterAndExpand"
-                HorizontalOptions="CenterAndExpand"/>
             <controls:CircleCountdown
                 Progress="{Binding Progress}"
                 ProgressStartColor="{DynamicResource Primary}"
                 ProgressEndColor="{DynamicResource Primary}"
                 StrokeWidth="12"/>
+            <Button
+                Text="{Binding ClockFace}"
+                FontSize="50"
+                TextColor="{DynamicResource Primary}"
+                BackgroundColor="#00FFFFFF"
+                Command="{Binding TimerButtonCommand}"
+                CornerRadius="150"
+                WidthRequest="300"
+                HeightRequest="300"
+                VerticalOptions="CenterAndExpand"
+                HorizontalOptions="CenterAndExpand"/>
             </Grid>
-            <Grid VerticalOptions="End">
+            <Grid VerticalOptions="End" HorizontalOptions="CenterAndExpand">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="110"/>
                     <ColumnDefinition Width="60"/>
                     <ColumnDefinition Width="60"/>
-                    <ColumnDefinition Width="110"/>
                 </Grid.ColumnDefinitions>
                 <Button
                     Text="+2"
-                    Grid.Column="1"
                     Command="{Binding Plus2Command}"
                     BackgroundColor="{DynamicResource Primary}"
                     TextColor="{DynamicResource Background}"
                     Opacity="{Binding ShowingTimeModifiers}"
                     IsEnabled="{Binding ShowingTimeModifiers}"/>
                 <Button
-                    Grid.Column="2"
+                    Grid.Column="1"
                     Text="dnf"
                     BackgroundColor="{DynamicResource Primary}"
                     Command="{Binding DnfCommand}"
@@ -60,51 +58,90 @@
                     IsEnabled="{Binding ShowingTimeModifiers}"/>
                 <Label/>
             </Grid>
-            <Frame VerticalOptions="EndAndExpand" CornerRadius="10" BackgroundColor="{DynamicResource Foreground}" Margin="20,0,20,30" HasShadow="False" Padding="10">
-                <Grid>
+            <Frame VerticalOptions="EndAndExpand" HorizontalOptions="Center" CornerRadius="10" BackgroundColor="{DynamicResource Foreground}" Margin="20,0,20,30" HasShadow="False" Padding="10">
+                <Grid VerticalOptions="EndAndExpand">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="145"/>
                     </Grid.ColumnDefinitions>
                     <StackLayout>
                         <Label
                         FontSize="14"
+                        Text="Best:"
+                        FontAttributes="Bold"
+                        TextColor="{DynamicResource Accent}"
+                        HorizontalOptions="Start"/>
+                        <Label
+                        FontSize="14"
+                        Text="Ao5:"
+                        FontAttributes="Bold"
+                        TextColor="{DynamicResource Accent}"
+                        HorizontalOptions="Start"/>
+                        <Label
+                        FontSize="14"
+                        Text="Ao12:"
+                        FontAttributes="Bold"
+                        TextColor="{DynamicResource Accent}"
+                        HorizontalOptions="Start"/>
+                    </StackLayout>
+                    <StackLayout Margin="15,0">
+                        <Label
+                        FontSize="14"
                         Text="{Binding Best}"
                         FontAttributes="Bold"
                         TextColor="{DynamicResource Accent}"
-                        HorizontalTextAlignment="End"
-                        HorizontalOptions="Start"/>
+                        HorizontalOptions="End"/>
                         <Label
                         FontSize="14"
                         Text="{Binding Ao5}"
                         FontAttributes="Bold"
                         TextColor="{DynamicResource Accent}"
-                        HorizontalOptions="Start"/>
+                        HorizontalOptions="End"/>
                         <Label
                         FontSize="14"
                         Text="{Binding Ao12}"
                         FontAttributes="Bold"
                         TextColor="{DynamicResource Accent}"
-                        HorizontalOptions="Start"/>
+                        HorizontalOptions="End"/>
                     </StackLayout>
                     <StackLayout Grid.Column="1">
+                        <Label
+                        FontSize="14"
+                        Text="Worst:"
+                        FontAttributes="Bold"
+                        TextColor="{DynamicResource Accent}"
+                        HorizontalOptions="Start"/>
+                        <Label
+                        FontSize="14"
+                        Text="Ao100:"
+                        FontAttributes="Bold"
+                        TextColor="{DynamicResource Accent}"
+                        HorizontalOptions="Start"/>
+                        <Label
+                        FontSize="14"
+                        Text="Ao1000:"
+                        FontAttributes="Bold"
+                        TextColor="{DynamicResource Accent}"
+                        HorizontalOptions="Start"/>
+                    </StackLayout>
+                    <StackLayout Grid.Column="1" Margin="15,0">
                         <Label
                         FontSize="14"
                         Text="{Binding Worst}"
                         FontAttributes="Bold"
                         TextColor="{DynamicResource Accent}"
-                        HorizontalOptions="Start"/>
+                        HorizontalOptions="End"/>
                         <Label
                         FontSize="14"
                         Text="{Binding Ao100}"
                         FontAttributes="Bold"
                         TextColor="{DynamicResource Accent}"
-                        HorizontalOptions="Start"/>
+                        HorizontalOptions="End"/>
                         <Label
                         FontSize="14"
                         Text="{Binding Ao1000}"
                         FontAttributes="Bold"
                         TextColor="{DynamicResource Accent}"
-                        HorizontalOptions="Start"/>
+                        HorizontalOptions="End"/>
                     </StackLayout>
                 </Grid>
             </Frame>

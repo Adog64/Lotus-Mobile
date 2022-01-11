@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Lotus_Timer.Views.AboutPage">
     <ContentPage.Content>
-        <StackLayout>
+        <StackLayout BackgroundColor="{DynamicResource Background}">
             <Label 
                 Margin="0, 50, 0, 0"
                 Text="Thank You For Joining Team Lotus!"

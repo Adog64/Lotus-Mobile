@@ -54,12 +54,12 @@ namespace Lotus_Timer.ViewModels
         public void UpdatePageStats()
         {
             SessionManager.UpdateSessionStats();
-            Best = "Best: " + FormatTime(SessionManager.CurrentSession.Best);
-            Worst = "Worst: " + FormatTime(SessionManager.CurrentSession.Worst);
-            Ao5 = "Ao5: " + FormatTime(SessionManager.CurrentSession.Ao5);
-            Ao12 = "Ao12: " + FormatTime(SessionManager.CurrentSession.Ao12);
-            Ao100 = "Ao100: " + FormatTime(SessionManager.CurrentSession.Ao100);
-            Ao1000 = "Ao1000: " + FormatTime(SessionManager.CurrentSession.Ao1000);
+            Best = FormatTime(SessionManager.CurrentSession.Best);
+            Worst = FormatTime(SessionManager.CurrentSession.Worst);
+            Ao5 =  FormatTime(SessionManager.CurrentSession.Ao5);
+            Ao12 = FormatTime(SessionManager.CurrentSession.Ao12);
+            Ao100 = FormatTime(SessionManager.CurrentSession.Ao100);
+            Ao1000 = FormatTime(SessionManager.CurrentSession.Ao1000);
         }
 
         // format seconds into a standard time format
@@ -68,7 +68,7 @@ namespace Lotus_Timer.ViewModels
             if (time == -1)
                 return "DNF";
             if (time == 0)
-                return "-.-";
+                return "";
             if (TimeSpan.FromSeconds(time).Hours > 0)
                 return TimeSpan.FromSeconds(time).ToString(@"%h\:mm\:ss\.ff");
             if (TimeSpan.FromSeconds(time).Minutes > 0)

@@ -7,7 +7,6 @@
     -->
     <Application.Resources>
         <ResourceDictionary Source="ThemeResources/DarkTheme.xaml" />
-
         <!-- Layouts and UI Control Styles will go here-->
 
     </Application.Resources>

@@ -4,7 +4,7 @@
              xmlns:controls="clr-namespace:Lotus_Timer.Controls"
              x:Class="Lotus_Timer.Views.StatsPage">
     <ContentPage.Content>
-        <StackLayout Spacing="10">
+        <StackLayout Spacing="10" BackgroundColor="{DynamicResource Background}">
             <Label
                 Text="3x3"
                 FontAttributes="Bold"
@@ -13,7 +13,7 @@
                 HorizontalOptions="CenterAndExpand"
                 VerticalOptions="Center"
                 />
-            <Frame VerticalOptions="StartAndExpand" CornerRadius="10" BackgroundColor="{DynamicResource Foreground}" Margin="20,0,20,0" HasShadow="False" Padding="10">
+            <Frame VerticalOptions="StartAndExpand" CornerRadius="10" BackgroundColor="{DynamicResource Foreground}" HeightRequest="100" Margin="20,0,20,0" HasShadow="False" Padding="10">
                 <Grid VerticalOptions="EndAndExpand">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="145"/>
@@ -21,47 +21,86 @@
                     <StackLayout>
                         <Label
                         FontSize="14"
+                        Text="Best:"
+                        FontAttributes="Bold"
+                        TextColor="{DynamicResource Accent}"
+                        HorizontalOptions="Start"/>
+                        <Label
+                        FontSize="14"
+                        Text="Ao5:"
+                        FontAttributes="Bold"
+                        TextColor="{DynamicResource Accent}"
+                        HorizontalOptions="Start"/>
+                        <Label
+                        FontSize="14"
+                        Text="Ao12:"
+                        FontAttributes="Bold"
+                        TextColor="{DynamicResource Accent}"
+                        HorizontalOptions="Start"/>
+                    </StackLayout>
+                    <StackLayout Margin="15,0">
+                        <Label
+                        FontSize="14"
                         Text="{Binding Best}"
                         FontAttributes="Bold"
                         TextColor="{DynamicResource Accent}"
-                        HorizontalTextAlignment="End"
-                        HorizontalOptions="Start"/>
+                        HorizontalOptions="End"/>
                         <Label
                         FontSize="14"
                         Text="{Binding Ao5}"
                         FontAttributes="Bold"
                         TextColor="{DynamicResource Accent}"
-                        HorizontalOptions="Start"/>
+                        HorizontalOptions="End"/>
                         <Label
                         FontSize="14"
                         Text="{Binding Ao12}"
                         FontAttributes="Bold"
                         TextColor="{DynamicResource Accent}"
-                        HorizontalOptions="Start"/>
+                        HorizontalOptions="End"/>
                     </StackLayout>
                     <StackLayout Grid.Column="1">
+                        <Label
+                        FontSize="14"
+                        Text="Worst:"
+                        FontAttributes="Bold"
+                        TextColor="{DynamicResource Accent}"
+                        HorizontalOptions="Start"/>
+                        <Label
+                        FontSize="14"
+                        Text="Ao100:"
+                        FontAttributes="Bold"
+                        TextColor="{DynamicResource Accent}"
+                        HorizontalOptions="Start"/>
+                        <Label
+                        FontSize="14"
+                        Text="Ao1000:"
+                        FontAttributes="Bold"
+                        TextColor="{DynamicResource Accent}"
+                        HorizontalOptions="Start"/>
+                    </StackLayout>
+                    <StackLayout Grid.Column="1" Margin="15,0">
                         <Label
                         FontSize="14"
                         Text="{Binding Worst}"
                         FontAttributes="Bold"
                         TextColor="{DynamicResource Accent}"
-                        HorizontalOptions="Start"/>
+                        HorizontalOptions="End"/>
                         <Label
                         FontSize="14"
                         Text="{Binding Ao100}"
                         FontAttributes="Bold"
                         TextColor="{DynamicResource Accent}"
-                        HorizontalOptions="Start"/>
+                        HorizontalOptions="End"/>
                         <Label
                         FontSize="14"
                         Text="{Binding Ao1000}"
                         FontAttributes="Bold"
                         TextColor="{DynamicResource Accent}"
-                        HorizontalOptions="Start"/>
+                        HorizontalOptions="End"/>
                     </StackLayout>
                 </Grid>
             </Frame>
-            <controls:NumberedListView Margin="0,0,0,20" ItemsSource="{Binding Solves}" SeparatorVisibility="None" Increasing="False" TextColor="{DynamicResource Primary}" ItemSelected="OpenSolvePage" HeightRequest="500"/>
+            <controls:NumberedListView Margin="0,0,0,20" ItemsSource="{Binding Solves}" SeparatorVisibility="None" Increasing="False" TextColor="{DynamicResource Primary}" BackgroundColor="{DynamicResource Background}" ItemSelected="OpenSolvePage"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

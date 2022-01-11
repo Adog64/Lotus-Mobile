@@ -3,7 +3,8 @@
  xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
  x:Class="Lotus_Timer.ThemeResources.DarkTheme">
     <Color x:Key="Primary">#E0E0E5</Color>
+    <Color x:Key="TransparentPrimary">#A0EFFFFFF</Color>
     <Color x:Key="Background">#303030</Color>
-    <Color x:Key="Foreground">#404040</Color>
+    <Color x:Key="Foreground">#7160E8</Color>
     <Color x:Key="Accent">#E0E0E5</Color>
 </ResourceDictionary>

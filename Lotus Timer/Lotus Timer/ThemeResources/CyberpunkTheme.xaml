@@ -3,6 +3,7 @@
  xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
  x:Class="Lotus_Timer.ThemeResources.CyberpunkTheme">
     <Color x:Key="Primary">#08FFB0</Color>
+    <Color x:Key="TransparentPrimary">#0008FFB0</Color>
     <Color x:Key="Background">#261D45</Color>
     <Color x:Key="Foreground">#100D23</Color>
     <Color x:Key="Accent">#08FFB0</Color>
