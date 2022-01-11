@@ -59,8 +59,9 @@
                 <Label/>
             </Grid>
             <Frame VerticalOptions="EndAndExpand" HorizontalOptions="Center" CornerRadius="10" BackgroundColor="{DynamicResource Foreground}" Margin="20,0,20,30" HasShadow="False" Padding="10">
-                <Grid VerticalOptions="EndAndExpand">
+                <Grid VerticalOptions="EndAndExpand" HorizontalOptions="CenterAndExpand" ColumnSpacing="15">
                     <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="145"/>
                         <ColumnDefinition Width="145"/>
                     </Grid.ColumnDefinitions>
                     <StackLayout>
@@ -83,7 +84,7 @@
                         TextColor="{DynamicResource Accent}"
                         HorizontalOptions="Start"/>
                     </StackLayout>
-                    <StackLayout Margin="15,0">
+                    <StackLayout>
                         <Label
                         FontSize="14"
                         Text="{Binding Best}"
@@ -123,7 +124,7 @@
                         TextColor="{DynamicResource Accent}"
                         HorizontalOptions="Start"/>
                     </StackLayout>
-                    <StackLayout Grid.Column="1" Margin="15,0">
+                    <StackLayout Grid.Column="1">
                         <Label
                         FontSize="14"
                         Text="{Binding Worst}"

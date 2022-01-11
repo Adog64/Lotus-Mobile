@@ -13,9 +13,10 @@
                 HorizontalOptions="CenterAndExpand"
                 VerticalOptions="Center"
                 />
-            <Frame VerticalOptions="StartAndExpand" CornerRadius="10" BackgroundColor="{DynamicResource Foreground}" HeightRequest="100" Margin="20,0,20,0" HasShadow="False" Padding="10">
-                <Grid VerticalOptions="EndAndExpand">
+            <Frame VerticalOptions="StartAndExpand" HorizontalOptions="Center" CornerRadius="10" HeightRequest="80" BackgroundColor="{DynamicResource Foreground}" Margin="20,0,20,30" HasShadow="False" Padding="10">
+                <Grid VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand">
                     <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="145"/>
                         <ColumnDefinition Width="145"/>
                     </Grid.ColumnDefinitions>
                     <StackLayout>
@@ -78,7 +79,7 @@
                         TextColor="{DynamicResource Accent}"
                         HorizontalOptions="Start"/>
                     </StackLayout>
-                    <StackLayout Grid.Column="1" Margin="15,0">
+                    <StackLayout Grid.Column="1">
                         <Label
                         FontSize="14"
                         Text="{Binding Worst}"
