@@ -8,8 +8,7 @@
             android:TabbedPage.BarSelectedItemColor="{DynamicResource Accent}"
             BarBackgroundColor="{DynamicResource Foreground}">  
     <!--Pages can be added as references or inline-->
-    <local:TimerPage IconImageSource="TimerIcon.png" Title=""/>
-    <local:StatsPage IconImageSource="StatsIcon.png" Title=""/>
-    <!--local:TrainerPage IconImageSource="TrainerIcon.png" Title=""/-->
-    <local:AboutPage IconImageSource="AboutIcon.png" Title=""/>
+    <local:TimerPage IconImageSource="Timer.svg" Title=""/>
+    <local:StatsPage IconImageSource="Stats.svg" Title=""/>
+    <local:AboutPage IconImageSource="Info.svg" Title=""/>
 </TabbedPage>
