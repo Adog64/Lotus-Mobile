@@ -110,6 +110,7 @@ namespace Lotus_Timer.ViewModels
         {
             _timerState = TimerState.INSPECTION;
             Progress = 1;
+            _timer.Restart();
             _time = 15;                     // length of inpection
             ShowingScramble = false;        // stop showing scramble
             ClockFace = _time.ToString();   // update display on timer
@@ -118,7 +119,7 @@ namespace Lotus_Timer.ViewModels
             {
                 if (_timerState == TimerState.INSPECTION && _time > 0)
                 {
-                    _time -= TICK;
+                    _time = 15 - _timer.Elapsed.TotalSeconds;
                     Progress = (float)(_time / 15);
                     ClockFace = ((int)_time).ToString();
                     return true;
@@ -132,7 +133,7 @@ namespace Lotus_Timer.ViewModels
             _timerState = TimerState.TIMING;
             _time = 0;                          // clear time
             _penalty = 0;
-            _timer.Start();
+            _timer.Restart();
             ClockFace = _time.ToString();       // update timer display
             Progress = 0;
             // start timer

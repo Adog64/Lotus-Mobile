@@ -13,8 +13,8 @@
                 HorizontalOptions="CenterAndExpand"
                 VerticalOptions="Center"
                 />
-            <Frame VerticalOptions="StartAndExpand" HorizontalOptions="Center" CornerRadius="10" HeightRequest="80" BackgroundColor="{DynamicResource Foreground}" Margin="20,0,20,30" HasShadow="False" Padding="10">
-                <Grid VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand">
+            <Frame VerticalOptions="StartAndExpand" HorizontalOptions="Center" CornerRadius="10" HeightRequest="100" BackgroundColor="{DynamicResource Foreground}" Margin="20,0,20,0" HasShadow="False" Padding="10">
+                <Grid VerticalOptions="StartAndExpand" HorizontalOptions="CenterAndExpand">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="145"/>
                         <ColumnDefinition Width="145"/>
