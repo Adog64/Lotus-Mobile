@@ -1,12 +1,18 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="LotusTimer.Views.TrainerPage">
+             x:Class="LotusTimer.Views.SessionControlPage">
     <ContentPage.Content>
         <StackLayout>
-            <Label Text="Trainer Test Page"
+            <Label Text="Welcome to Xamarin.Forms!"
                 VerticalOptions="CenterAndExpand" 
                 HorizontalOptions="CenterAndExpand" />
+            <Button 
+                Text="Return"
+                Margin="20"
+                Clicked="Return"
+                BackgroundColor="{DynamicResource Foreground}"
+                TextColor="{DynamicResource Accent}"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

@@ -6,15 +6,14 @@ using System.Threading.Tasks;
 using System.Diagnostics;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
-using Lotus_Timer.Models;
-using Lotus_Timer.ViewModels;
+using LotusTimer.Models;
+using LotusTimer.ViewModels;
 
-namespace Lotus_Timer.Views
+namespace LotusTimer.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class SolvePage : ContentPage
     {
-        private string scramble;
         public SolvePage(int solveIndex)
         {
             BindingContext = new SolveViewModel(solveIndex);

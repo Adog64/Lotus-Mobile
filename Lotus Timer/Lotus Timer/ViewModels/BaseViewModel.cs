@@ -1,12 +1,12 @@
-﻿using Lotus_Timer.Models;
-using Lotus_Timer.Services;
+﻿using LotusTimer.Models;
+using LotusTimer.Services;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using Xamarin.Forms;
 
-namespace Lotus_Timer.ViewModels
+namespace LotusTimer.ViewModels
 {
     public class BaseViewModel : INotifyPropertyChanged
     {

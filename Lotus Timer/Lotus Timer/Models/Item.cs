@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Lotus_Timer.Models
+namespace LotusTimer.Models
 {
     public class Item
     {

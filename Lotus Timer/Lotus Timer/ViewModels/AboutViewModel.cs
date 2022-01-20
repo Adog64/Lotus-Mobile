@@ -5,7 +5,7 @@ using System.Windows.Input;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 
-namespace Lotus_Timer.ViewModels
+namespace LotusTimer.ViewModels
 {
     public class AboutViewModel
     {

@@ -7,14 +7,19 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace LotusTimer.ThemeResources
+namespace LotusTimer.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class LotusBrightTheme : ResourceDictionary
+    public partial class SessionControlPage : ContentPage
     {
-        public LotusBrightTheme()
+        public SessionControlPage()
         {
             InitializeComponent();
+        }
+
+        private async void Return(object sender, EventArgs e)
+        {
+            await Navigation.PopModalAsync();
         }
     }
 }

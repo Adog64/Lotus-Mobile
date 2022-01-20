@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace Lotus_Timer.Views
+namespace LotusTimer.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class TabsPage : TabbedPage

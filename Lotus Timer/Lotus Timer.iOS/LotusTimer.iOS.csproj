@@ -9,9 +9,9 @@
     <ProjectTypeGuids>{FEACFBD2-3405-455C-9665-78FE426C6842};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <TemplateGuid>{89a4fe7c-635d-49c9-8d8c-5cd363c0d68d}</TemplateGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>Lotus_Timer.iOS</RootNamespace>
+    <RootNamespace>LotusTimer.iOS</RootNamespace>
     <IPhoneResourcePrefix>Resources</IPhoneResourcePrefix>
-    <AssemblyName>Lotus Timer.iOS</AssemblyName>
+    <AssemblyName>LotusTimer.iOS</AssemblyName>
     <MtouchEnableSGenConc>true</MtouchEnableSGenConc>
     <MtouchHttpClientHandler>NSUrlSessionHandler</MtouchHttpClientHandler>
     <ProvisioningType>automatic</ProvisioningType>
@@ -61,6 +61,9 @@
     <MtouchArch>ARM64</MtouchArch>
     <CodesignKey>iPhone Developer</CodesignKey>
     <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(RunConfiguration)' == 'Default' ">
+    <AppExtensionDebugBundleId />
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="CustomTabbedPageRenderer.cs" />
@@ -140,27 +143,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <BundleResource Include="Resources\launcher_foreground.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\icon.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\DiscordIcon.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\TimerIcon.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\TrainerIcon.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\AboutIcon.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\StatsIcon.png" />
-  </ItemGroup>
-  <ItemGroup>
     <BundleResource Include="Resources\Timer.svg" />
   </ItemGroup>
   <ItemGroup>
@@ -169,4 +151,24 @@
   <ItemGroup>
     <BundleResource Include="Resources\Info.svg" />
   </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Community.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\News.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Inspection.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Community.svg" />
+    <BundleResource Include="Resources\empty.svg" />
+    <AndroidResource Include="Resources\DiscordIcon.png">
+      <Generator>MSBuild:UpdateGeneratedFiles</Generator>
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <BundleResource Include="Resources\Cube.svg" />
+    <BundleResource Include="Resources\EditCube.svg" />
+  </ItemGroup>
+  <ItemGroup />
 </Project>

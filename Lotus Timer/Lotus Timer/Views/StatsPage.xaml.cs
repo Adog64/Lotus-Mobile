@@ -1,15 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Diagnostics;
-using System.Threading.Tasks;
-using Lotus_Timer.ViewModels;
-using Lotus_Timer.Controls;
+using LotusTimer.ViewModels;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
-using Lotus_Timer.Models;
 
-namespace Lotus_Timer.Views
+namespace LotusTimer.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class StatsPage : ContentPage

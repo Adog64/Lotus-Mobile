@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
-using Lotus_Timer.Models;
+using LotusTimer.Models;
 using Xamarin.Forms;
 using Xamarin.Essentials;
 
-namespace Lotus_Timer.Controls
+namespace LotusTimer.Controls
 {
     
     public class NumberedListView : ListView

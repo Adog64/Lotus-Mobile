@@ -1,10 +1,10 @@
-﻿using Lotus_Timer.Services;
-using Lotus_Timer.Views;
+﻿using LotusTimer.Services;
+using LotusTimer.Views;
 using System;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace Lotus_Timer
+namespace LotusTimer
 {
     public partial class App : Application
     {

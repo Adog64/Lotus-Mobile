@@ -3,7 +3,7 @@ using SkiaSharp.Views.Forms;
 using System;
 using Xamarin.Forms;
 
-namespace Lotus_Timer.Controls
+namespace LotusTimer.Controls
 {
     public class CircleCountdown : SKCanvasView
     {

@@ -1,10 +1,10 @@
-﻿using Lotus_Timer.Models;
+﻿using LotusTimer.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Lotus_Timer.Services
+namespace LotusTimer.Services
 {
     public class MockDataStore : IDataStore<Item>
     {

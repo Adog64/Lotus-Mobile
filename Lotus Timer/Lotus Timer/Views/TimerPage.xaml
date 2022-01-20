@@ -1,13 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:vm="clr-namespace:Lotus_Timer.ViewModels"
-             xmlns:controls="clr-namespace:Lotus_Timer.Controls"
-             x:Class="Lotus_Timer.Views.TimerPage"
+             xmlns:vm="clr-namespace:LotusTimer.ViewModels"
+             xmlns:controls="clr-namespace:LotusTimer.Controls"
+             xmlns:ti="clr-namespace:Plugin.CrossPlatformTintedImage.Abstractions;assembly=Plugin.CrossPlatformTintedImage.Abstractions"
+             x:Class="LotusTimer.Views.TimerPage"
              Title="{Binding Title}">
 
     <ContentPage.Content>
         <StackLayout CompressedLayout.IsHeadless="False" BackgroundColor="{DynamicResource Background}">
+            
             <Label
                 Text="{Binding Scramble}"
                 HorizontalTextAlignment="Center"
@@ -15,7 +17,7 @@
                 Padding="8"
                 TextColor="{DynamicResource Primary}"
                 FontSize="14"
-                VerticalOptions="EndAndExpand"
+                VerticalOptions="CenterAndExpand"
                 HorizontalOptions="Center"
                 />
             <Grid VerticalOptions="EndAndExpand"> 
@@ -31,8 +33,7 @@
                 BackgroundColor="#00FFFFFF"
                 Command="{Binding TimerButtonCommand}"
                 CornerRadius="150"
-                WidthRequest="300"
-                HeightRequest="300"
+                WidthRequest="300" HeightRequest="300"
                 VerticalOptions="CenterAndExpand"
                 HorizontalOptions="CenterAndExpand"/>
             </Grid>
@@ -58,94 +59,117 @@
                     IsEnabled="{Binding ShowingTimeModifiers}"/>
                 <Label/>
             </Grid>
-            <Frame VerticalOptions="EndAndExpand" HorizontalOptions="CenterAndExpand" CornerRadius="10" BackgroundColor="{DynamicResource Foreground}" Margin="0,20,0,20" HasShadow="False" Padding="10">
-                <Grid VerticalOptions="EndAndExpand" HorizontalOptions="CenterAndExpand" ColumnSpacing="15">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="125"/>
-                        <ColumnDefinition Width="125"/>
-                    </Grid.ColumnDefinitions>
-                    <StackLayout>
-                        <Label
+            <StackLayout Orientation="Horizontal">
+                <Frame VerticalOptions="EndAndExpand" HorizontalOptions="CenterAndExpand" CornerRadius="10" BackgroundColor="{DynamicResource Foreground}" Margin="0,20,0,20" HasShadow="False" Padding="10">
+                    <Grid VerticalOptions="EndAndExpand" HorizontalOptions="CenterAndExpand" ColumnSpacing="15">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="125"/>
+                            <ColumnDefinition Width="125"/>
+                        </Grid.ColumnDefinitions>
+                        <StackLayout>
+                            <Label
                         FontSize="14"
                         Text="Best:"
                         FontAttributes="Bold"
                         TextColor="{DynamicResource Accent}"
                         HorizontalOptions="Start"/>
-                        <Label
+                            <Label
                         FontSize="14"
                         Text="Ao5:"
                         FontAttributes="Bold"
                         TextColor="{DynamicResource Accent}"
                         HorizontalOptions="Start"/>
-                        <Label
+                            <Label
                         FontSize="14"
                         Text="Ao12:"
                         FontAttributes="Bold"
                         TextColor="{DynamicResource Accent}"
                         HorizontalOptions="Start"/>
-                    </StackLayout>
-                    <StackLayout>
-                        <Label
+                        </StackLayout>
+                        <StackLayout>
+                            <Label
                         FontSize="14"
                         Text="{Binding Best}"
                         FontAttributes="Bold"
                         TextColor="{DynamicResource Accent}"
                         HorizontalOptions="End"/>
-                        <Label
+                            <Label
                         FontSize="14"
                         Text="{Binding Ao5}"
                         FontAttributes="Bold"
                         TextColor="{DynamicResource Accent}"
                         HorizontalOptions="End"/>
-                        <Label
+                            <Label
                         FontSize="14"
                         Text="{Binding Ao12}"
                         FontAttributes="Bold"
                         TextColor="{DynamicResource Accent}"
                         HorizontalOptions="End"/>
-                    </StackLayout>
-                    <StackLayout Grid.Column="1">
-                        <Label
+                        </StackLayout>
+                        <StackLayout Grid.Column="1">
+                            <Label
                         FontSize="14"
                         Text="Worst:"
                         FontAttributes="Bold"
                         TextColor="{DynamicResource Accent}"
                         HorizontalOptions="Start"/>
-                        <Label
+                            <Label
                         FontSize="14"
                         Text="Ao100:"
                         FontAttributes="Bold"
                         TextColor="{DynamicResource Accent}"
                         HorizontalOptions="Start"/>
-                        <Label
+                            <Label
                         FontSize="14"
                         Text="Ao1000:"
                         FontAttributes="Bold"
                         TextColor="{DynamicResource Accent}"
                         HorizontalOptions="Start"/>
-                    </StackLayout>
-                    <StackLayout Grid.Column="1">
-                        <Label
+                        </StackLayout>
+                        <StackLayout Grid.Column="1">
+                            <Label
                         FontSize="14"
                         Text="{Binding Worst}"
                         FontAttributes="Bold"
                         TextColor="{DynamicResource Accent}"
                         HorizontalOptions="End"/>
-                        <Label
+                            <Label
                         FontSize="14"
                         Text="{Binding Ao100}"
                         FontAttributes="Bold"
                         TextColor="{DynamicResource Accent}"
                         HorizontalOptions="End"/>
-                        <Label
+                            <Label
                         FontSize="14"
                         Text="{Binding Ao1000}"
                         FontAttributes="Bold"
                         TextColor="{DynamicResource Accent}"
                         HorizontalOptions="End"/>
+                        </StackLayout>
+                    </Grid>
+                </Frame>
+                <Frame HorizontalOptions="CenterAndExpand" CornerRadius="10" BackgroundColor="{DynamicResource Foreground}" Margin="0,20,0,20" HasShadow="False" Padding="10">
+                    <StackLayout Orientation="Horizontal" HorizontalOptions="CenterAndExpand" Spacing="0">
+                        <Label Text="ᐅ" VerticalOptions="CenterAndExpand" FontAttributes="Bold"/>
+                        <CarouselView ItemsSource="{Binding SessionNames}" HeightRequest="20" PeekAreaInsets="22" CurrentItemChangedCommand="{Binding SessionChangeCommand}" CurrentItemChangedCommandParameter="{Binding Source={RelativeSource Self}, Path=CurrentItem}">
+                            <CarouselView.ItemsLayout>
+                                <LinearItemsLayout Orientation="Vertical" SnapPointsType="Mandatory" SnapPointsAlignment="Center"/>
+                            </CarouselView.ItemsLayout>
+                            <CarouselView.ItemTemplate>
+                                <DataTemplate>
+                                    <StackLayout>
+                                        <Label                         
+                                            HeightRequest="20"
+                                            HorizontalOptions="CenterAndExpand"
+                                            VerticalOptions="CenterAndExpand"
+                                            Text="{Binding}"/>
+                                    </StackLayout>
+                                </DataTemplate>
+                            </CarouselView.ItemTemplate>
+                        </CarouselView>
                     </StackLayout>
-                </Grid>
-            </Frame>
+                </Frame>
+            </StackLayout>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

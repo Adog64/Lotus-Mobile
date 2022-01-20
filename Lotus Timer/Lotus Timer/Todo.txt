@@ -1,0 +1,18 @@
+﻿Alpha 1.2
+- Time graphs
+- Session switching
+
+Alpha 1.3
+- Skewb, Pyraminx, Megaminx, Clock, and Square-1 scrambles
+- Multi-Scramble Sessions
+
+Alpha 1.4
+- Cube drawing
+- OLL & PLL alg trainer
+
+Beta 1.0
+- Account registration
+- Online alg database (With upvotes & downvotes)
+
+Beta 1.1
+- News

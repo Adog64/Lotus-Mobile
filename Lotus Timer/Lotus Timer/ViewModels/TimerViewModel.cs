@@ -2,16 +2,17 @@
 using System.Collections.Generic;
 using System.Windows.Input;
 using Xamarin.Forms;
-using Xamarin.Essentials;
-using Lotus_Timer.Models;
+using LotusTimer.Models;
 using System.Diagnostics;
 
-namespace Lotus_Timer.ViewModels
+namespace LotusTimer.ViewModels
 {
-    public class TimerViewModel : StatsViewModel
+    public class TimerViewModel : CubeTimingViewModel
     {
         public ICommand TimerButtonCommand { get; }
         public ICommand DnfCommand { get; }
+
+        public ICommand SessionChangeCommand { get; }
         public ICommand Plus2Command { get; }
         double _time;
         Stopwatch _timer;
@@ -22,7 +23,6 @@ namespace Lotus_Timer.ViewModels
         sbyte _penalty;
         string _scramble;
         string _clockFace;
-        Scrambler _scrambler;
         TimerState _timerState;
 
         public bool ShowingScramble
@@ -62,7 +62,6 @@ namespace Lotus_Timer.ViewModels
         public TimerViewModel()
         {
             Title = "Timer";
-            _scrambler = new Scrambler("333");
             _time = 0;
             _penalty = 0;
             _showingTimeModifiers = false;
@@ -71,14 +70,23 @@ namespace Lotus_Timer.ViewModels
             _timerState = TimerState.READY;
             ShowingScramble = true;
             ClockFace = "Ready";
-            Scramble = _scrambler.generateScramble();
+            
+            Scramble = Scrambler.generateScramble(SessionManager.CurrentSession.CubeType);
             TimerButtonCommand = new Command(() => Next());
             DnfCommand = new Command(() => Dnf());
             Plus2Command = new Command(() => Plus2());
+            SessionChangeCommand = new Command((item) => 
+            {
+                SessionManager.SetSession( SessionNames.IndexOf(item.ToString()) );
+                Scramble = Scrambler.generateScramble(SessionManager.CurrentSession.CubeType);
+                UpdatePageStats();
+            });           
         }
 
-        // incrament timer state and execute the next step of the timer
-        public void Next()
+        
+
+    // incrament timer state and execute the next step of the timer
+    public void Next()
         {
             switch (_timerState)
             {
@@ -99,7 +107,7 @@ namespace Lotus_Timer.ViewModels
                     ShowingScramble = true;
                     ShowingTimeModifiers = false;
                     Progress = 1;
-                    Scramble = _scrambler.generateScramble();
+                    Scramble = Scrambler.generateScramble(SessionManager.CurrentSession.CubeType);
                     _timerState = TimerState.READY;
                     _timer.Reset();
                     break;
@@ -181,34 +189,35 @@ namespace Lotus_Timer.ViewModels
         }
 
         // private class for quickly generating scrambles
-        private class Scrambler
+        private static class Scrambler
         {
-            string cubeType;
-            private readonly string[] R_MOVES = { "R", "R'", "R2" },
-                                      U_MOVES = { "U", "U'", "U2" },
-                                      F_MOVES = { "F", "F'", "F2" },
-                                      L_MOVES = { "L", "L'", "L2" },
-                                      D_MOVES = { "D", "D'", "D2" },
-                                      B_MOVES = { "B", "B'", "B2" },
-                                      Rw_MOVES = { "Rw", "Rw'", "Rw2" },
-                                      Uw_MOVES = { "Uw", "Uw'", "Uw2" },
-                                      Fw_MOVES = { "Fw", "Fw'", "Fw2" },
-                                      Lw_MOVES = { "Lw", "Lw'", "Lw2" },
-                                      Dw_MOVES = { "Dw", "Dw'", "Dw2" },
-                                      Bw_MOVES = { "Bw", "Bw'", "Bw2" },
-                                      TRw_MOVES = { "3Rw", "3Rw'", "3Rw2" },
-                                      TUw_MOVES = { "3Uw", "3Uw'", "3Uw2" },
-                                      TFw_MOVES = { "3Fw", "3Fw'", "3Fw2" },
-                                      TLw_MOVES = { "3Lw", "3Lw'", "3Lw2" },
-                                      TDw_MOVES = { "3Dw", "3Dw'", "3Dw2" },
-                                      TBw_MOVES = { "3Bw", "3Bw'", "3Bw2" };
+            private static readonly string[] R_MOVES = { "R", "R'", "R2" },
+                                             U_MOVES = { "U", "U'", "U2" },
+                                             F_MOVES = { "F", "F'", "F2" },
+                                             L_MOVES = { "L", "L'", "L2" },
+                                             D_MOVES = { "D", "D'", "D2" },
+                                             B_MOVES = { "B", "B'", "B2" },
+                                             Rw_MOVES = { "Rw", "Rw'", "Rw2" },
+                                             Uw_MOVES = { "Uw", "Uw'", "Uw2" },
+                                             Fw_MOVES = { "Fw", "Fw'", "Fw2" },
+                                             Lw_MOVES = { "Lw", "Lw'", "Lw2" },
+                                             Dw_MOVES = { "Dw", "Dw'", "Dw2" },
+                                             Bw_MOVES = { "Bw", "Bw'", "Bw2" },
+                                             TRw_MOVES = { "3Rw", "3Rw'", "3Rw2" },
+                                             TUw_MOVES = { "3Uw", "3Uw'", "3Uw2" },
+                                             TFw_MOVES = { "3Fw", "3Fw'", "3Fw2" },
+                                             TLw_MOVES = { "3Lw", "3Lw'", "3Lw2" },
+                                             TDw_MOVES = { "3Dw", "3Dw'", "3Dw2" },
+                                             TBw_MOVES = { "3Bw", "3Bw'", "3Bw2" };
 
-            private List<string[]> moveSet;
-            private int scrambleSize;
-            public Scrambler(string cubeType)
+            public static string generateScramble(string cubeType="333")
             {
-                this.cubeType = cubeType;
-                moveSet = new List<string[]>();
+                Random random = new Random();
+
+                List<string[]> scramblePrototype = new List<string[]>();    // scrambled faces (R, U, L) without regards to rotation direction or amount
+                string scramble = "";                                       // the finished scramble to be returned
+                int scrambleSize = 0;
+                List<string[]> moveSet = new List<string[]>();
                 switch (cubeType)
                 {
                     case "777":
@@ -263,23 +272,17 @@ namespace Lotus_Timer.ViewModels
                         scrambleSize = 10;
                         break;
                 }
-            }
 
-            public string generateScramble()
-            {
-                Random random = new Random();
-
-                List<string[]> scramblePrototype = new List<string[]>();    // scrambled faces (R, U, L) without regards to rotation direction or amount
-                string scramble = "";                                       // the finished scramble to be returned
 
                 for (int i = 0; i < scrambleSize; i++)
                 {
                     scramblePrototype.Add(moveSet[random.Next(moveSet.Count)]);
 
                     // make sure you aren't doing nothing (Ex. U followed by U2 or U, D, U')
-                    while ((i > 0 && scramblePrototype[i - 1] == scramblePrototype[i]) 
-                         || i > 1 && scramblePrototype[i - 2] == scramblePrototype[i] && scramblePrototype[i - 1] == moveSet[(moveSet.IndexOf(scramblePrototype[i]) + 3) % 6])
-                        scramblePrototype[i] = moveSet[random.Next(moveSet.Count)];
+                    if (cubeType == "333")
+                        while ((i > 0 && scramblePrototype[i - 1] == scramblePrototype[i]) 
+                             || i > 1 && scramblePrototype[i - 2] == scramblePrototype[i] && scramblePrototype[i - 1] == moveSet[(moveSet.IndexOf(scramblePrototype[i]) + 3) % 6])
+                            scramblePrototype[i] = moveSet[random.Next(moveSet.Count)];
                 }
 
                 foreach (string[] moveType in scramblePrototype)

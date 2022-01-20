@@ -1,107 +1,103 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:controls="clr-namespace:Lotus_Timer.Controls"
-             x:Class="Lotus_Timer.Views.StatsPage">
+             xmlns:controls="clr-namespace:LotusTimer.Controls"
+             xmlns:microcharts="clr-namespace:Microcharts.Forms;assembly=Microcharts.Forms"
+             x:Class="LotusTimer.Views.StatsPage">
     <ContentPage.Content>
         <StackLayout Spacing="10" BackgroundColor="{DynamicResource Background}">
-            <Label
-                Text="3x3"
-                FontAttributes="Bold"
-                FontSize="Title"
-                TextColor="{DynamicResource Primary}"
-                HorizontalOptions="CenterAndExpand"
-                VerticalOptions="Center"
-                />
-            <Frame VerticalOptions="StartAndExpand" HorizontalOptions="Center" CornerRadius="10" HeightRequest="100" BackgroundColor="{DynamicResource Foreground}" Margin="20,0,20,0" HasShadow="False" Padding="10">
-                <Grid VerticalOptions="StartAndExpand" HorizontalOptions="CenterAndExpand">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="145"/>
-                        <ColumnDefinition Width="145"/>
-                    </Grid.ColumnDefinitions>
-                    <StackLayout>
-                        <Label
-                        FontSize="14"
-                        Text="Best:"
-                        FontAttributes="Bold"
-                        TextColor="{DynamicResource Accent}"
-                        HorizontalOptions="Start"/>
-                        <Label
-                        FontSize="14"
-                        Text="Ao5:"
-                        FontAttributes="Bold"
-                        TextColor="{DynamicResource Accent}"
-                        HorizontalOptions="Start"/>
-                        <Label
-                        FontSize="14"
-                        Text="Ao12:"
-                        FontAttributes="Bold"
-                        TextColor="{DynamicResource Accent}"
-                        HorizontalOptions="Start"/>
-                    </StackLayout>
-                    <StackLayout Margin="15,0">
-                        <Label
-                        FontSize="14"
-                        Text="{Binding Best}"
-                        FontAttributes="Bold"
-                        TextColor="{DynamicResource Accent}"
-                        HorizontalOptions="End"/>
-                        <Label
-                        FontSize="14"
-                        Text="{Binding Ao5}"
-                        FontAttributes="Bold"
-                        TextColor="{DynamicResource Accent}"
-                        HorizontalOptions="End"/>
-                        <Label
-                        FontSize="14"
-                        Text="{Binding Ao12}"
-                        FontAttributes="Bold"
-                        TextColor="{DynamicResource Accent}"
-                        HorizontalOptions="End"/>
-                    </StackLayout>
-                    <StackLayout Grid.Column="1">
-                        <Label
-                        FontSize="14"
-                        Text="Worst:"
-                        FontAttributes="Bold"
-                        TextColor="{DynamicResource Accent}"
-                        HorizontalOptions="Start"/>
-                        <Label
-                        FontSize="14"
-                        Text="Ao100:"
-                        FontAttributes="Bold"
-                        TextColor="{DynamicResource Accent}"
-                        HorizontalOptions="Start"/>
-                        <Label
-                        FontSize="14"
-                        Text="Ao1000:"
-                        FontAttributes="Bold"
-                        TextColor="{DynamicResource Accent}"
-                        HorizontalOptions="Start"/>
-                    </StackLayout>
-                    <StackLayout Grid.Column="1">
-                        <Label
-                        FontSize="14"
-                        Text="{Binding Worst}"
-                        FontAttributes="Bold"
-                        TextColor="{DynamicResource Accent}"
-                        HorizontalOptions="End"/>
-                        <Label
-                        FontSize="14"
-                        Text="{Binding Ao100}"
-                        FontAttributes="Bold"
-                        TextColor="{DynamicResource Accent}"
-                        HorizontalOptions="End"/>
-                        <Label
-                        FontSize="14"
-                        Text="{Binding Ao1000}"
-                        FontAttributes="Bold"
-                        TextColor="{DynamicResource Accent}"
-                        HorizontalOptions="End"/>
-                    </StackLayout>
-                </Grid>
+            <Frame VerticalOptions="StartAndExpand" HorizontalOptions="Center" CornerRadius="10" HeightRequest="150" BackgroundColor="{DynamicResource Foreground}" Margin="20,0,20,0" HasShadow="False" Padding="10">
+                <StackLayout>
+                    <Grid VerticalOptions="StartAndExpand" HorizontalOptions="CenterAndExpand">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="145"/>
+                            <ColumnDefinition Width="145"/>
+                        </Grid.ColumnDefinitions>
+                        <StackLayout>
+                            <Label
+                            FontSize="14"
+                            Text="Best:"
+                            FontAttributes="Bold"
+                            TextColor="{DynamicResource Accent}"
+                            HorizontalOptions="Start"/>
+                            <Label
+                            FontSize="14"
+                            Text="Ao5:"
+                            FontAttributes="Bold"
+                            TextColor="{DynamicResource Accent}"
+                            HorizontalOptions="Start"/>
+                            <Label
+                            FontSize="14"
+                            Text="Ao12:"
+                            FontAttributes="Bold"
+                            TextColor="{DynamicResource Accent}"
+                            HorizontalOptions="Start"/>
+                        </StackLayout>
+                        <StackLayout Margin="15,0">
+                            <Label
+                            FontSize="14"
+                            Text="{Binding Best}"
+                            FontAttributes="Bold"
+                            TextColor="{DynamicResource Accent}"
+                            HorizontalOptions="End"/>
+                            <Label
+                            FontSize="14"
+                            Text="{Binding Ao5}"
+                            FontAttributes="Bold"
+                            TextColor="{DynamicResource Accent}"
+                            HorizontalOptions="End"/>
+                            <Label
+                            FontSize="14"
+                            Text="{Binding Ao12}"
+                            FontAttributes="Bold"
+                            TextColor="{DynamicResource Accent}"
+                            HorizontalOptions="End"/>
+                        </StackLayout>
+                        <StackLayout Grid.Column="1">
+                            <Label
+                            FontSize="14"
+                            Text="Worst:"
+                            FontAttributes="Bold"
+                            TextColor="{DynamicResource Accent}"
+                            HorizontalOptions="Start"/>
+                            <Label
+                            FontSize="14"
+                            Text="Ao100:"
+                            FontAttributes="Bold"
+                            TextColor="{DynamicResource Accent}"
+                            HorizontalOptions="Start"/>
+                            <Label
+                            FontSize="14"
+                            Text="Ao1000:"
+                            FontAttributes="Bold"
+                            TextColor="{DynamicResource Accent}"
+                            HorizontalOptions="Start"/>
+                        </StackLayout>
+                        <StackLayout Grid.Column="1">
+                            <Label
+                            FontSize="14"
+                            Text="{Binding Worst}"
+                            FontAttributes="Bold"
+                            TextColor="{DynamicResource Accent}"
+                            HorizontalOptions="End"/>
+                            <Label
+                            FontSize="14"
+                            Text="{Binding Ao100}"
+                            FontAttributes="Bold"
+                            TextColor="{DynamicResource Accent}"
+                            HorizontalOptions="End"/>
+                            <Label
+                            FontSize="14"
+                            Text="{Binding Ao1000}"
+                            FontAttributes="Bold"
+                            TextColor="{DynamicResource Accent}"
+                            HorizontalOptions="End"/>
+                        </StackLayout>
+                    </Grid>
+                    <microcharts:ChartView Chart="{Binding TimesChart}"/>
+                </StackLayout>
             </Frame>
-            <controls:NumberedListView Margin="0,0,0,20" ItemsSource="{Binding Solves}" SeparatorVisibility="None" Increasing="False" TextColor="{DynamicResource Primary}" BackgroundColor="{DynamicResource Background}" ItemSelected="OpenSolvePage"/>
+            <controls:NumberedListView Margin="0,0,0,20" ItemsSource="{Binding Solves}" SeparatorVisibility="None" Increasing="False" TextColor="{DynamicResource Primary}" ItemSelected="OpenSolvePage"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

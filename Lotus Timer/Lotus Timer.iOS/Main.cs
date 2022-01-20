@@ -5,7 +5,7 @@ using System.Linq;
 using Foundation;
 using UIKit;
 
-namespace Lotus_Timer.iOS
+namespace LotusTimer.iOS
 {
     public class Application
     {

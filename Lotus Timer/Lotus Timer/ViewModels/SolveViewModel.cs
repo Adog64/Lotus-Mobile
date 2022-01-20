@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using Lotus_Timer.Models;
+using LotusTimer.Models;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 
-namespace Lotus_Timer.ViewModels
+namespace LotusTimer.ViewModels
 {
     public class SolveViewModel : BaseViewModel
     {

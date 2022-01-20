@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Lotus_Timer.Services
+namespace LotusTimer.Services
 {
     public interface IDataStore<T>
     {

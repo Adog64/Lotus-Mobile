@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace Lotus_Timer.ThemeResources
+namespace LotusTimer.ThemeResources
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class DarkTheme : ResourceDictionary

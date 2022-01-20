@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <TabbedPage xmlns="http://xamarin.com/schemas/2014/forms"
             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-            xmlns:local="clr-namespace:Lotus_Timer.Views"
-            x:Class="Lotus_Timer.Views.TabsPage"
+            xmlns:local="clr-namespace:LotusTimer.Views"
+            x:Class="LotusTimer.Views.TabsPage"
             xmlns:android="clr-namespace:Xamarin.Forms.PlatformConfiguration.AndroidSpecific;assembly=Xamarin.Forms.Core"
             android:TabbedPage.ToolbarPlacement="Bottom"
             android:TabbedPage.BarSelectedItemColor="{DynamicResource Accent}"
@@ -10,5 +10,7 @@
     <!--Pages can be added as references or inline-->
     <local:TimerPage IconImageSource="Timer.svg" Title=""/>
     <local:StatsPage IconImageSource="Stats.svg" Title=""/>
+    <local:AboutPage IconImageSource="Community.svg" Title=""/>
+    <local:NewsPage IconImageSource="News.svg" Title=""/>
     <local:AboutPage IconImageSource="Info.svg" Title=""/>
 </TabbedPage>

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Lotus_Timer.Models
+namespace LotusTimer.Models
 {
     public class Session
     {

@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Lotus_Timer.ViewModels;
+using LotusTimer.ViewModels;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using System.Diagnostics;
+using LotusTimer.Models;
 
-namespace Lotus_Timer.Views
+namespace LotusTimer.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class TimerPage : ContentPage
@@ -16,6 +18,11 @@ namespace Lotus_Timer.Views
         {
             BindingContext = new TimerViewModel();
             InitializeComponent();
+        }
+        public async void ChangeSession(object sender, EventArgs e)
+        {
+            Debug.WriteLine("Opening sessions list...");
+            await Navigation.PushModalAsync(new SessionControlPage());
         }
     }
 }

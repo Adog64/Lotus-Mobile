@@ -5,7 +5,7 @@ using FFImageLoading.Svg.Platform;
 using TabbedPageSVGIcons;
 using TabbedPageSVGIcons.iOS;
 using UIKit;
-using Lotus_Timer.Views;
+using LotusTimer.Views;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.iOS;
 
