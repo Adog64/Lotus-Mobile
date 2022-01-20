@@ -11,8 +11,8 @@ namespace LotusTimer.ViewModels
     {
         public ICommand TimerButtonCommand { get; }
         public ICommand DnfCommand { get; }
-
         public ICommand SessionChangeCommand { get; }
+
         public ICommand Plus2Command { get; }
         double _time;
         Stopwatch _timer;
@@ -75,12 +75,12 @@ namespace LotusTimer.ViewModels
             TimerButtonCommand = new Command(() => Next());
             DnfCommand = new Command(() => Dnf());
             Plus2Command = new Command(() => Plus2());
-            SessionChangeCommand = new Command((item) => 
+            SessionChangeCommand = new Command((item) =>
             {
-                SessionManager.SetSession( SessionNames.IndexOf(item.ToString()) );
+                SessionManager.SetSession(SessionNames.IndexOf(item.ToString()));
                 Scramble = Scrambler.generateScramble(SessionManager.CurrentSession.CubeType);
                 UpdatePageStats();
-            });           
+            });
         }
 
         

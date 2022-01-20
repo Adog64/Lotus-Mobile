@@ -1,12 +1,15 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics;
+using System.Windows.Input;
 using LotusTimer.Models;
 using Microcharts;
+using Xamarin.Forms;
 
 namespace LotusTimer.ViewModels
 {
     public class StatsViewModel : CubeTimingViewModel
     {
+        public ICommand SessionChangeCommand { get; }
         public List<Solve> Solves
         {
             get { return SessionManager.CurrentSession.Solves; }
@@ -21,6 +24,12 @@ namespace LotusTimer.ViewModels
 
         public StatsViewModel()
         {
+            SessionChangeCommand = new Command((item) =>
+            {
+                SessionManager.SetSession(SessionNames.IndexOf(item.ToString()));
+                LoadDataPoints();
+                UpdatePageStats();
+            });
             LoadDataPoints();
             UpdatePageStats();
         }

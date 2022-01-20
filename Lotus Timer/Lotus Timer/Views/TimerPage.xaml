@@ -150,7 +150,6 @@
                 </Frame>
                 <Frame HorizontalOptions="CenterAndExpand" CornerRadius="10" BackgroundColor="{DynamicResource Foreground}" Margin="0,20,0,20" HasShadow="False" Padding="10">
                     <StackLayout Orientation="Horizontal" HorizontalOptions="CenterAndExpand" Spacing="0">
-                        <Label Text="ᐅ" VerticalOptions="CenterAndExpand" FontAttributes="Bold"/>
                         <CarouselView ItemsSource="{Binding SessionNames}" HeightRequest="20" PeekAreaInsets="22" CurrentItemChangedCommand="{Binding SessionChangeCommand}" CurrentItemChangedCommandParameter="{Binding Source={RelativeSource Self}, Path=CurrentItem}">
                             <CarouselView.ItemsLayout>
                                 <LinearItemsLayout Orientation="Vertical" SnapPointsType="Mandatory" SnapPointsAlignment="Center"/>
@@ -167,6 +166,7 @@
                                 </DataTemplate>
                             </CarouselView.ItemTemplate>
                         </CarouselView>
+                        <Label Text="&lt;" VerticalOptions="CenterAndExpand"/>
                     </StackLayout>
                 </Frame>
             </StackLayout>

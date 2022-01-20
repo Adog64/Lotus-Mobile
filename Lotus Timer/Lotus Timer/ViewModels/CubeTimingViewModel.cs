@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Windows.Input;
 using LotusTimer.Models;
 
 namespace LotusTimer.ViewModels
@@ -7,6 +8,7 @@ namespace LotusTimer.ViewModels
     public class CubeTimingViewModel : BaseViewModel
     {
         protected string _best, _worst, _ao5, _ao12, _ao100, _ao1000;
+        
         public string Best
         {
             get { return _best; }
