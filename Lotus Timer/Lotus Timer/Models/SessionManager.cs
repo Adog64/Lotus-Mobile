@@ -28,15 +28,16 @@ namespace LotusTimer.Models
                 AddSession("5x5", "555");
                 AddSession("6x6", "666");
                 AddSession("7x7", "777");
-                CurrentSession = Sessions[0];
                 File.WriteAllText(FileName, JsonConvert.SerializeObject(Sessions));
             }
             // if they do exist read them from the disk
             else
             {
                 Sessions = JsonConvert.DeserializeObject<List<Session>>(File.ReadAllText(FileName));
-                CurrentSession = Sessions[0];
             }
+
+            if (CurrentSession == null)
+                CurrentSession = Sessions[0];
 
             // set LatestSolve to latest solve for easy access
             if (CurrentSession.Solves.Count > 0)

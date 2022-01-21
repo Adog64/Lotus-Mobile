@@ -26,9 +26,13 @@ namespace LotusTimer.ViewModels
         {
             SessionChangeCommand = new Command((item) =>
             {
-                SessionManager.SetSession(SessionNames.IndexOf(item.ToString()));
-                LoadDataPoints();
+                SessionIndex = SessionNames.IndexOf(item.ToString());
+                SessionManager.Load();
+                SessionManager.SetSession(SessionIndex);
+                Debug.WriteLine(SessionIndex.ToString());
                 UpdatePageStats();
+                LoadDataPoints();
+                OnPropertyChanged("Solves");
             });
             LoadDataPoints();
             UpdatePageStats();
@@ -37,8 +41,9 @@ namespace LotusTimer.ViewModels
         public void LoadDataPoints()
         {
             List<ChartEntry> dataPoints = new List<ChartEntry>();
-            foreach (Solve s in SessionManager.CurrentSession.Solves)
+            for (int i = Solves.Count - 1; i >= 0; i--)
             {
+                Solve s = Solves[i];
                 if (s.Time > 0 && s.Penalty >= 0)
                     dataPoints.Add(new ChartEntry((float)(s.Time + s.Penalty)) { Color = SkiaSharp.SKColors.White });
                 Debug.WriteLine(s.Time);
@@ -53,15 +58,12 @@ namespace LotusTimer.ViewModels
 
         public void Refresh()
         {
-            Debug.WriteLine("Checking for refresh...");
-            if (!SessionManager.Refreshed)
-            {
-                Debug.WriteLine("Refreshing stats...");
-                SessionManager.Load();
-                UpdatePageStats();
-                LoadDataPoints();
-                OnPropertyChanged("Solves");
-            }
+            Debug.WriteLine("Refreshing stats...");
+            SessionManager.Load();
+            SessionManager.SetSession(SessionIndex);
+            UpdatePageStats();
+            LoadDataPoints();
+            OnPropertyChanged("Solves");
         }
     }
 }

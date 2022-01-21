@@ -8,7 +8,12 @@ namespace LotusTimer.ViewModels
     public class CubeTimingViewModel : BaseViewModel
     {
         protected string _best, _worst, _ao5, _ao12, _ao100, _ao1000;
-        
+        protected int _sessionIndex;
+        public int SessionIndex
+        { 
+            get { return _sessionIndex; }
+            set { SetProperty(ref _sessionIndex, value); } 
+        }
         public string Best
         {
             get { return _best; }

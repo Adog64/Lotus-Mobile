@@ -70,14 +70,15 @@ namespace LotusTimer.ViewModels
             _timerState = TimerState.READY;
             ShowingScramble = true;
             ClockFace = "Ready";
-            
+            SessionIndex = 0;
             Scramble = Scrambler.generateScramble(SessionManager.CurrentSession.CubeType);
             TimerButtonCommand = new Command(() => Next());
             DnfCommand = new Command(() => Dnf());
             Plus2Command = new Command(() => Plus2());
             SessionChangeCommand = new Command((item) =>
             {
-                SessionManager.SetSession(SessionNames.IndexOf(item.ToString()));
+                SessionIndex = SessionNames.IndexOf(item.ToString());
+                SessionManager.SetSession(SessionIndex);
                 Scramble = Scrambler.generateScramble(SessionManager.CurrentSession.CubeType);
                 UpdatePageStats();
             });
