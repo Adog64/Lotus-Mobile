@@ -10,7 +10,7 @@
     <!--Pages can be added as references or inline-->
     <local:TimerPage IconImageSource="Timer.svg" Title=""/>
     <local:StatsPage IconImageSource="Stats.svg" Title=""/>
-    <local:AboutPage IconImageSource="Community.svg" Title=""/>
+    <local:CommunityPage IconImageSource="Community.svg" Title=""/>
     <local:NewsPage IconImageSource="News.svg" Title=""/>
     <local:AboutPage IconImageSource="Info.svg" Title=""/>
 </TabbedPage>

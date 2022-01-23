@@ -214,17 +214,15 @@ namespace LotusTimer.ViewModels
             public static string generateScramble(string cubeType="333")
             {
                 Random random = new Random();
-
-                List<string[]> scramblePrototype = new List<string[]>();    // scrambled faces (R, U, L) without regards to rotation direction or amount
                 string scramble = "";                                       // the finished scramble to be returned
                 int scrambleSize = 0;
                 List<string[]> moveSet = new List<string[]>();
                 switch (cubeType)
                 {
                     case "777":
-                        moveSet.Add(TLw_MOVES);
-                        moveSet.Add(TBw_MOVES);
                         moveSet.Add(TDw_MOVES);
+                        moveSet.Add(TBw_MOVES);
+                        moveSet.Add(TLw_MOVES);
                         goto case "666";
                     case "666":
                         moveSet.Add(TUw_MOVES);
@@ -232,9 +230,9 @@ namespace LotusTimer.ViewModels
                         moveSet.Add(TRw_MOVES);
                         goto case "555";
                     case "555":
-                        moveSet.Add(Lw_MOVES);
-                        moveSet.Add(Bw_MOVES);
                         moveSet.Add(Dw_MOVES);
+                        moveSet.Add(Bw_MOVES);
+                        moveSet.Add(Lw_MOVES);
                         goto case "444";
                     case "444":
                         moveSet.Add(Uw_MOVES);
@@ -242,9 +240,9 @@ namespace LotusTimer.ViewModels
                         moveSet.Add(Rw_MOVES);
                         goto case "333";
                     case "333":
-                        moveSet.Add(L_MOVES);
-                        moveSet.Add(B_MOVES);
                         moveSet.Add(D_MOVES);
+                        moveSet.Add(B_MOVES);
+                        moveSet.Add(L_MOVES);
                         goto case "222";
                     case "222":
                         moveSet.Add(U_MOVES);
@@ -274,21 +272,31 @@ namespace LotusTimer.ViewModels
                         break;
                 }
 
+                int[] scramblePrototype = new int[scrambleSize];
 
+                for(int i = 0; i < moveSet.Count; i++)
+                    Debug.WriteLine(moveSet[i][0]);
+                
                 for (int i = 0; i < scrambleSize; i++)
                 {
-                    scramblePrototype.Add(moveSet[random.Next(moveSet.Count)]);
+                    scramblePrototype[i] = random.Next(moveSet.Count);
 
                     // make sure you aren't doing nothing (Ex. U followed by U2 or U, D, U')
-                    if (cubeType == "333")
-                        while ((i > 0 && scramblePrototype[i - 1] == scramblePrototype[i]) 
-                             || i > 1 && scramblePrototype[i - 2] == scramblePrototype[i] && scramblePrototype[i - 1] == moveSet[(moveSet.IndexOf(scramblePrototype[i]) + 3) % 6])
-                            scramblePrototype[i] = moveSet[random.Next(moveSet.Count)];
+                        if (cubeType == "222")
+                            while (i > 0 && scramblePrototype[i] == scramblePrototype[i - 1])
+                            {
+                                 Debug.WriteLine("fail");
+                                scramblePrototype[i] = random.Next(moveSet.Count);
+                            }
+                        else
+                            while ((i > 0 && scramblePrototype[i - 1] == scramblePrototype[i])
+                            || (i > 1 && (scramblePrototype[i] % 3 == scramblePrototype[i - 1] % 3) && scramblePrototype[i - 2] == scramblePrototype[i]))
+                                scramblePrototype[i] = random.Next(moveSet.Count);
                 }
 
-                foreach (string[] moveType in scramblePrototype)
+                foreach (int moveIndex in scramblePrototype)
                 {
-                    scramble += moveType[random.Next(3)] + " ";
+                    scramble += moveSet[moveIndex][random.Next(3)] + " ";
                 }
 
                 scramble = scramble.Substring(0, scramble.Length - 1);      // remove the trailing space

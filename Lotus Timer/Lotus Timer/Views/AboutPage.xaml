@@ -6,7 +6,7 @@
         <StackLayout BackgroundColor="{DynamicResource Background}">
             <Label 
                 Margin="0, 50, 0, 0"
-                Text="Thank You For Joining Team Lotus!"
+                Text="Thank You For Choosing Lotus!"
                 FontSize="20"
                 FontAttributes="Bold"
                 TextColor="{StaticResource Primary}"

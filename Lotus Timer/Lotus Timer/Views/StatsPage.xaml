@@ -6,7 +6,7 @@
              x:Class="LotusTimer.Views.StatsPage">
     <ContentPage.Content>
         <StackLayout Spacing="10" BackgroundColor="{DynamicResource Background}">
-            <Frame VerticalOptions="StartAndExpand" HorizontalOptions="Center" CornerRadius="10" HeightRequest="150" BackgroundColor="{DynamicResource Foreground}" Margin="20,0,20,0" HasShadow="False" Padding="10">
+            <Frame VerticalOptions="StartAndExpand" HorizontalOptions="Center" CornerRadius="10" HeightRequest="150" BackgroundColor="{DynamicResource Foreground}" Margin="20,20,20,0" HasShadow="False" Padding="10">
                 <StackLayout>
                     <Grid VerticalOptions="StartAndExpand" HorizontalOptions="CenterAndExpand">
                         <Grid.ColumnDefinitions>
@@ -99,7 +99,7 @@
             </Frame>
             <StackLayout Orientation="Horizontal">
                 <controls:NumberedListView Margin="0,0,0,20" ItemsSource="{Binding Solves}" SeparatorVisibility="None" Increasing="False" TextColor="{DynamicResource Primary}" ItemSelected="OpenSolvePage"/>
-                <Frame HorizontalOptions="CenterAndExpand" WidthRequest="180" CornerRadius="10" VerticalOptions="StartAndExpand" HeightRequest="60" BackgroundColor="{DynamicResource Foreground}" Margin="20" HasShadow="False" Padding="10">
+                <Frame HorizontalOptions="CenterAndExpand" WidthRequest="180" CornerRadius="10" VerticalOptions="StartAndExpand" HeightRequest="60" BackgroundColor="{DynamicResource Foreground}" Margin="20,0" HasShadow="False" Padding="10">
                     <StackLayout Orientation="Horizontal" HorizontalOptions="CenterAndExpand" Spacing="0">
                         <CarouselView ItemsSource="{Binding SessionNames}" PeekAreaInsets="22" VerticalOptions="CenterAndExpand" CurrentItemChangedCommand="{Binding SessionChangeCommand}" CurrentItemChangedCommandParameter="{Binding Source={RelativeSource Self}, Path=CurrentItem}">
                             <CarouselView.ItemsLayout>
