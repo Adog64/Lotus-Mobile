@@ -209,7 +209,13 @@ namespace LotusTimer.ViewModels
                                              TFw_MOVES = { "3Fw", "3Fw'", "3Fw2" },
                                              TLw_MOVES = { "3Lw", "3Lw'", "3Lw2" },
                                              TDw_MOVES = { "3Dw", "3Dw'", "3Dw2" },
-                                             TBw_MOVES = { "3Bw", "3Bw'", "3Bw2" };
+                                             TBw_MOVES = { "3Bw", "3Bw'", "3Bw2" },
+                                             SR_MOVES = { "r", "r'", "r2" },
+                                             SU_MOVES = { "u", "u'", "u2" },
+                                             SF_MOVES = { "f", "f'", "f2" },
+                                             SL_MOVES = { "l", "l'", "l2" },
+                                             SD_MOVES = { "d", "d'", "d2" },
+                                             SB_MOVES = { "b", "b'", "b2" };
 
             public static string generateScramble(string cubeType="333")
             {
@@ -278,6 +284,13 @@ namespace LotusTimer.ViewModels
                     case "222":
                         scrambleSize = 10;
                         break;
+                    case "skb":
+                        scrambleSize = 8;
+                        break;
+                    case "pyr":
+                        scrambleSize = 8;
+                        break;
+
                 }
 
                 int[] scramblePrototype = new int[scrambleSize];
@@ -290,7 +303,7 @@ namespace LotusTimer.ViewModels
                     scramblePrototype[i] = random.Next(moveSet.Count);
 
                     // make sure you aren't doing nothing (Ex. U followed by U2 or U, D, U')
-                        if (cubeType == "222")
+                        if (cubeType == "222" || cubeType == "skb" || cubeType == "pyr")
                             while (i > 0 && scramblePrototype[i] == scramblePrototype[i - 1])
                             {
                                  Debug.WriteLine("fail");
@@ -305,6 +318,31 @@ namespace LotusTimer.ViewModels
                 foreach (int moveIndex in scramblePrototype)
                 {
                     scramble += moveSet[moveIndex][random.Next(3)] + " ";
+                }
+
+                if (cubeType == "pyr")
+                {
+                    int numTipMoves = random.Next(4) + 1;
+                    List<int> tipScramblePrototype = new List<int>();
+
+                    moveSet.Clear();
+                    moveSet.Add(SR_MOVES);
+                    moveSet.Add(SL_MOVES);
+                    moveSet.Add(SU_MOVES);
+                    moveSet.Add(SB_MOVES);
+
+                    for(int i = 0; i < numTipMoves; i++)
+                    {
+                        do
+                        {
+                            tipScramblePrototype.Add(random.Next(4));
+                        } while (tipScramblePrototype.IndexOf(tipScramblePrototype[i]) != tipScramblePrototype[i]);
+                    }
+
+                    foreach(int moveIndex in tipScramblePrototype)
+                    {
+                        scramble += moveSet[moveIndex][random.Next(3)] + " ";
+                    }
                 }
 
                 scramble = scramble.Substring(0, scramble.Length - 1);      // remove the trailing space
