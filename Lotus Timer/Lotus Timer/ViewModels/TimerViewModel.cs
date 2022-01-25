@@ -290,58 +290,74 @@ namespace LotusTimer.ViewModels
                     case "pyr":
                         scrambleSize = 8;
                         break;
+                    case "mga":
+                        scrambleSize = 77;
+                        break;
 
                 }
 
                 int[] scramblePrototype = new int[scrambleSize];
 
-                for(int i = 0; i < moveSet.Count; i++)
-                    Debug.WriteLine(moveSet[i][0]);
-                
-                for (int i = 0; i < scrambleSize; i++)
+                if (cubeType == "mga")
                 {
-                    scramblePrototype[i] = random.Next(moveSet.Count);
+                    string[] endingMoves = { "U ", "U' " };
+                    string[] directionMoves = { "++ ", "-- " };
+                    for (int i = 1; i <= scrambleSize; i++)
+                    {
+                        int choice = random.Next(2);
+                        if (i % 11 == 0)
+                            scramble += endingMoves[choice];
+                        else
+                            scramble += ((i % 2 == 0) ? "D" : "R") + directionMoves[choice];
+                    }
+                }
+                else
+                {
+                    for (int i = 0; i < scrambleSize; i++)
+                    {
+                        scramblePrototype[i] = random.Next(moveSet.Count);
 
-                    // make sure you aren't doing nothing (Ex. U followed by U2 or U, D, U')
+                        // make sure you aren't doing nothing (Ex. U followed by U2 or U, D, U')
                         if (cubeType == "222" || cubeType == "skb" || cubeType == "pyr")
                             while (i > 0 && scramblePrototype[i] == scramblePrototype[i - 1])
                             {
-                                 Debug.WriteLine("fail");
+                                Debug.WriteLine("fail");
                                 scramblePrototype[i] = random.Next(moveSet.Count);
                             }
                         else
                             while ((i > 0 && scramblePrototype[i - 1] == scramblePrototype[i])
                             || (i > 1 && (scramblePrototype[i] % 3 == scramblePrototype[i - 1] % 3) && scramblePrototype[i - 2] == scramblePrototype[i]))
                                 scramblePrototype[i] = random.Next(moveSet.Count);
-                }
-
-                foreach (int moveIndex in scramblePrototype)
-                {
-                    scramble += moveSet[moveIndex][random.Next(3)] + " ";
-                }
-
-                if (cubeType == "pyr")
-                {
-                    int numTipMoves = random.Next(4) + 1;
-                    List<int> tipScramblePrototype = new List<int>();
-
-                    moveSet.Clear();
-                    moveSet.Add(SR_MOVES);
-                    moveSet.Add(SL_MOVES);
-                    moveSet.Add(SU_MOVES);
-                    moveSet.Add(SB_MOVES);
-
-                    for(int i = 0; i < numTipMoves; i++)
-                    {
-                        do
-                        {
-                            tipScramblePrototype.Add(random.Next(4));
-                        } while (tipScramblePrototype.IndexOf(tipScramblePrototype[i]) != tipScramblePrototype[i]);
                     }
 
-                    foreach(int moveIndex in tipScramblePrototype)
+                    foreach (int moveIndex in scramblePrototype)
                     {
                         scramble += moveSet[moveIndex][random.Next(3)] + " ";
+                    }
+
+                    if (cubeType == "pyr")
+                    {
+                        int numTipMoves = random.Next(4) + 1;
+                        List<int> tipScramblePrototype = new List<int>();
+
+                        moveSet.Clear();
+                        moveSet.Add(SR_MOVES);
+                        moveSet.Add(SL_MOVES);
+                        moveSet.Add(SU_MOVES);
+                        moveSet.Add(SB_MOVES);
+
+                        for (int i = 0; i < numTipMoves; i++)
+                        {
+                            do
+                            {
+                                tipScramblePrototype.Add(random.Next(4));
+                            } while (tipScramblePrototype.IndexOf(tipScramblePrototype[i]) != tipScramblePrototype[i]);
+                        }
+
+                        foreach (int moveIndex in tipScramblePrototype)
+                        {
+                            scramble += moveSet[moveIndex][random.Next(3)] + " ";
+                        }
                     }
                 }
 
