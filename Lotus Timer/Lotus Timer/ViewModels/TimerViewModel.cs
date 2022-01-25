@@ -249,6 +249,14 @@ namespace LotusTimer.ViewModels
                         moveSet.Add(F_MOVES);
                         moveSet.Add(R_MOVES);
                         break;
+                    case "pyr":
+                        goto case "skb";
+                    case "skb":
+                        moveSet.Add(L_MOVES);
+                        moveSet.Add(U_MOVES);
+                        moveSet.Add(B_MOVES);
+                        moveSet.Add(R_MOVES);
+                        break;
                 }
                 switch (cubeType)
                 {
