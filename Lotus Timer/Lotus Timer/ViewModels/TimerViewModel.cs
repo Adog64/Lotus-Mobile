@@ -300,15 +300,19 @@ namespace LotusTimer.ViewModels
 
                 if (cubeType == "mga")
                 {
-                    string[] endingMoves = { "U ", "U' " };
+                    string[] endingMoves = { "U\n", "U'\n" };
                     string[] directionMoves = { "++ ", "-- " };
+                    int row = 0;
                     for (int i = 1; i <= scrambleSize; i++)
                     {
                         int choice = random.Next(2);
                         if (i % 11 == 0)
+                        {
                             scramble += endingMoves[choice];
+                            row++;
+                        }
                         else
-                            scramble += ((i % 2 == 0) ? "D" : "R") + directionMoves[choice];
+                            scramble += ((i % 2 == row % 2) ? "D" : "R") + directionMoves[choice];
                     }
                 }
                 else
@@ -348,10 +352,9 @@ namespace LotusTimer.ViewModels
 
                         for (int i = 0; i < numTipMoves; i++)
                         {
-                            do
-                            {
-                                tipScramblePrototype.Add(random.Next(4));
-                            } while (tipScramblePrototype.IndexOf(tipScramblePrototype[i]) != tipScramblePrototype[i]);
+                            tipScramblePrototype.Add(random.Next(4));
+                            while (tipScramblePrototype.IndexOf(tipScramblePrototype[i]) != tipScramblePrototype[i])
+                                tipScramblePrototype[i] = random.Next(4);
                         }
 
                         foreach (int moveIndex in tipScramblePrototype)
