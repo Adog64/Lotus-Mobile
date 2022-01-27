@@ -28,9 +28,10 @@ namespace LotusTimer.Models
                 AddSession("5x5", "555");
                 AddSession("6x6", "666");
                 AddSession("7x7", "777");
-                AddSession("Pyraminx", "pyr");
-                AddSession("Megaminx", "mga");
+                AddSession("Pyra", "pyr");
+                AddSession("Mega", "mga");
                 AddSession("Skewb", "skb");
+                AddSession("Squan", "sqn");
                 File.WriteAllText(FileName, JsonConvert.SerializeObject(Sessions));
             }
             // if they do exist read them from the disk

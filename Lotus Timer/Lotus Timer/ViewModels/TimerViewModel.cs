@@ -293,11 +293,15 @@ namespace LotusTimer.ViewModels
                     case "mga":
                         scrambleSize = 77;
                         break;
+                    case "sqn":
+                        scrambleSize = 10;
+                        break;
 
                 }
 
                 int[] scramblePrototype = new int[scrambleSize];
 
+                // megaminx has a much different scramble structure than NxN puzzles
                 if (cubeType == "mga")
                 {
                     string[] endingMoves = { "U\n", "U'\n" };
@@ -315,6 +319,32 @@ namespace LotusTimer.ViewModels
                             scramble += ((i % 2 == row % 2) ? "D" : "R") + directionMoves[choice];
                     }
                 }
+
+                // bruh square-1 scramble
+                else if (cubeType == "sqn")
+                {
+
+                    List<int> top = new List<int>() { 0, 1, 1, 0, 1, 1, 0, 1, 1, 0, 1, 1 },
+                              bot = new List<int>() { 0, 1, 1, 0, 1, 1, 0, 1, 1, 0, 1, 1 };
+                    const int SLICE_GAP = 6;
+                    int slice = 0;
+                    int move = 0;
+                    int testMove = 0;
+
+                    for (int i = 0; i < scrambleSize; i++)
+                    {
+                        // top rotation
+                        do
+                        {
+                            move = random.Next(2 * SLICE_GAP + 1) - SLICE_GAP; // random integer between -6 and 6
+                            testMove = (slice + move) % 6;
+                        } while ((testMove >= 1 && top[testMove] + top[testMove-1] != 2) || (testMove == 0 && top[testMove] + top[top.Count - 1] != 0)
+                                && top[testMove + SLICE_GAP] + top[testMove + SLICE_GAP - 1] != 2);
+                        // bottom rotation
+                        
+                    }
+                }
+                // scrambles for NxN and NxN-like puzzles
                 else
                 {
                     for (int i = 0; i < scrambleSize; i++)
@@ -334,11 +364,16 @@ namespace LotusTimer.ViewModels
                                 scramblePrototype[i] = random.Next(moveSet.Count);
                     }
 
-                    foreach (int moveIndex in scramblePrototype)
-                    {
-                        scramble += moveSet[moveIndex][random.Next(3)] + " ";
-                    }
+                    // add movement direction (ex. distinguish between R, R', and R2)
+                    if (cubeType != "pyr" && cubeType != "skb")
+                        foreach (int moveIndex in scramblePrototype)
+                            scramble += moveSet[moveIndex][random.Next(3)] + " ";
+                    // pyraminx and skewb don't have double rotations since they have triangular rotational symmetry 
+                    else
+                        foreach (int moveIndex in scramblePrototype)
+                            scramble += moveSet[moveIndex][random.Next(2)] + " ";
 
+                    // add up to 4 tip movements after the main pyraminx scramble
                     if (cubeType == "pyr")
                     {
                         int numTipMoves = random.Next(4) + 1;
@@ -359,7 +394,7 @@ namespace LotusTimer.ViewModels
 
                         foreach (int moveIndex in tipScramblePrototype)
                         {
-                            scramble += moveSet[moveIndex][random.Next(3)] + " ";
+                            scramble += moveSet[moveIndex][random.Next(2)] + " ";
                         }
                     }
                 }
