@@ -71,6 +71,7 @@ namespace LotusTimer.ViewModels
             ShowingScramble = true;
             ClockFace = "Ready";
             SessionIndex = 0;
+            Scrambler.generateScramble("sqn");
             Scramble = Scrambler.generateScramble(SessionManager.CurrentSession.CubeType);
             TimerButtonCommand = new Command(() => Next());
             DnfCommand = new Command(() => Dnf());
@@ -325,7 +326,8 @@ namespace LotusTimer.ViewModels
                 {
 
                     List<int> top = new List<int>() { 0, 1, 1, 0, 1, 1, 0, 1, 1, 0, 1, 1 },
-                              bot = new List<int>() { 0, 1, 1, 0, 1, 1, 0, 1, 1, 0, 1, 1 };
+                              bot = new List<int>() { 0, 1, 1, 0, 1, 1, 0, 1, 1, 0, 1, 1 },
+                              temp = new List<int>();
                     const int SLICE_GAP = 6;
                     int slice = 0;
                     int move = 0;
@@ -336,10 +338,20 @@ namespace LotusTimer.ViewModels
                         // top rotation
                         do
                         {
-                            move = random.Next(2 * SLICE_GAP + 1) - SLICE_GAP; // random integer between -6 and 6
-                            testMove = (slice + move) % 6;
-                        } while ((testMove >= 1 && top[testMove] + top[testMove-1] != 2) || (testMove == 0 && top[testMove] + top[top.Count - 1] != 0)
-                                && top[testMove + SLICE_GAP] + top[testMove + SLICE_GAP - 1] != 2);
+                            move = random.Next(2 * SLICE_GAP);
+                            temp.Clear();
+                            foreach (int t in top)
+                                temp.Add(t);
+                            for (int j = 0; j < move; j++)
+                            {
+                                temp.Add(temp[0]);
+                                temp.RemoveAt(0);
+                            }
+                        } while (temp[0] + temp[temp.Count - 1] != 2 && temp[SLICE_GAP] + temp[SLICE_GAP - 1] != 2);
+
+
+                        Debug.WriteLine(move);
+                        
                         // bottom rotation
                         
                     }
