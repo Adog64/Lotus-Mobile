@@ -19,7 +19,7 @@ A mobile cubing timer designed to be as simple as possible
 
 ### Additional Notes
 The Alpha 1.0 Release of Lotus is an Android-only preview of the Lotus cubing timer. The iPhone release will be out soon. 
-Download Lotus.apk to get started!
+Download Lotus.apk in the releases section of the tags page to get started!
 
 # Credits
 - Designed and made by Adog64
