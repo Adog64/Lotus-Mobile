@@ -1,6 +1,10 @@
 # Lotus-Mobile
 A mobile cubing timer designed to be as simple as possible
 
+<p align="center">
+    <a href="https://github.com/Adog64/Lotus-Mobile/releases/download/v1.2-alpha/Lotus.apk"><img src="https://github.com/Adog64/Lotus-Mobile/blob/master/AndroidDownloadIcon.png"></a>
+</p>
+
 ### The PB Scramble
 
 - All scrambles are generated in real-time and are displayed while the "Ready" button is visible. 
