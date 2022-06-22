@@ -1,5 +1,7 @@
-# Lotus-Mobile
-A mobile cubing timer designed to be as simple as possible
+<p align="center">
+    <img src="https://github.com/Adog64/Lotus-Mobile/blob/master/LotusTitleIcon.png">
+</p>
+#
 
 <p align="center">
     <a href="https://github.com/Adog64/Lotus-Mobile/releases/download/v1.2-alpha/Lotus.apk"><img src="https://github.com/Adog64/Lotus-Mobile/blob/master/AndroidDownloadIcon.png"></a>
