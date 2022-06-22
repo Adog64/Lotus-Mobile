@@ -25,7 +25,7 @@ The Alpha 1.0 Release of Lotus is an Android-only preview of the Lotus cubing ti
 Download Lotus.apk in the releases section of the tags page to get started!
 
 <p align="center">
-    <a href="https://github.com/Adog64/Lotus-Mobile/releases/download/v1.2-alpha/Lotus.apk"><img src="https://github.com/Adog64/Lotus-Mobile/blob/master/AndroidDownloadIcon.png"></a>
+    <a href="https://github.com/Adog64/Lotus-Mobile/releases/download/v1.3-alpha/Lotus_Alpha_1.3.apk"><img src="https://github.com/Adog64/Lotus-Mobile/blob/master/AndroidDownloadIcon.png"></a>
 </p>
 
 # Credits
