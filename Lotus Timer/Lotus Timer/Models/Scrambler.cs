@@ -134,26 +134,74 @@ namespace LotusTimer.Models
                         scramble += ((i % 2 == row % 2) ? "D" : "R") + directionMoves[choice];
                 }
             }
-
-            // bruh square-1 scramble
-            // top | bot | dif | sum
-            // 0     0      0     0
-            // 0     1     -1     1 -
-            // 0     2     -2     2
-            // 1     0      1     1
-            // 1     1      0     2 -
-            // 1     2     -1     3
-            // 2     0      2     2 -
-            // 2     1      1     3 -
-            // 2     2      0     4 -
             else if (cubeType == "sqn")
             {
-                List<int> top = new List<int>() { 1, 2, 1, 2, 1, 2, 1, 2 };
+                return "";
+                /*List<int> top = new List<int>() { 2, 1, 2, 1, 2, 1, 2, 1 };
                 List<int> bot = new List<int>() { 1, 2, 1, 2, 1, 2, 1, 2 };
+                List<int> turn_set = new List<int>(),
+                          top_set = new List<int>(),
+                          bot_set = new List<int>();
+
                 for (int i = 0; i < scrambleSize; i++)
                 {
+                    int turn = 0;
+                    int top_move = 0;
+                    int bot_move = 0;
 
-                }
+                    // top move
+                    foreach(int t in top)
+                    {
+                        turn += t;
+                        if (turn > 6)
+                            turn_set.Add(turn - 12);
+                        else
+                            turn_set.Add(turn);
+                    }
+                    foreach (int a in turn_set)
+                        if (turn_set.Contains(a + 6) || turn_set.Contains(a - 6))
+                            top_set.Add(a);
+                    top_move = top_set[random.Next(top_set.Count)];
+                    if (top_move > 0)
+                    {
+                        top.AddRange(top.GetRange(0, top_move));
+                        top.RemoveRange(0, top_move);
+                    }
+                    else if (top_move < 0)
+                    {
+                        top.InsertRange(0, top.GetRange(top.Count - top_move, top_move));
+                        top.RemoveRange(top.Count - top_move, top_move);
+                    }
+
+
+                    // bottom move
+                    turn = 0;
+                    turn_set.Clear();
+                    foreach (int t in bot)
+                    {
+                        turn += t;
+                        if (turn > 6)
+                            turn_set.Add(turn - 12);
+                        else
+                            turn_set.Add(turn);
+                    }
+                    foreach (int a in turn_set)
+                        if (turn_set.Contains(a + 6) || turn_set.Contains(a - 6))
+                            bot_set.Add(a);
+                    bot_move = bot_set[random.Next(bot_set.Count)];
+                    if (bot_move > 0)
+                    {
+                        bot.InsertRange(0, bot.GetRange(bot.Count - bot_move, bot_move));
+                        bot.RemoveRange(bot.Count - bot_move, bot_move);
+                    }
+                    else if (top_move < 0)
+                    {
+                        bot.AddRange(bot.GetRange(0, bot_move));
+                        bot.RemoveRange(0,bot_move);
+                    }
+
+                    // TODO: Slice
+                }*/
             }
             // scrambles for NxN and NxN-like puzzles
             else

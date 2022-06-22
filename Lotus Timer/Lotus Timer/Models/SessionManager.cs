@@ -31,7 +31,7 @@ namespace LotusTimer.Models
                 AddSession("Pyra", "pyr");
                 AddSession("Mega", "mga");
                 AddSession("Skewb", "skb");
-                AddSession("Squan", "sqn");
+                //AddSession("Squan", "sqn");
                 File.WriteAllText(FileName, JsonConvert.SerializeObject(Sessions));
             }
             // if they do exist read them from the disk
