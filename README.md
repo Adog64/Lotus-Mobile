@@ -14,7 +14,7 @@
 ### Keep your Eye on the Ball
 
 - Ready to begin your 15-second inspection period? Tap the ready button and begin inspecting. 
-- Once you have your triple X-Cross planned out (or more realistically 2 cross pieces), tap the timer again to begin your solve.
+- Once you have your triple X-Cross planned out (or if you're like me, 2 cross pieces), tap the timer again to begin your solve.
 - Tap the timer one last time when you finish your solve to stop it.
 - Screw up? No worries, DNF and +2 buttons appear after each solve.
 - The single button design will allow you to focus on improvement instead of searching for buttons.
