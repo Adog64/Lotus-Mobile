@@ -21,8 +21,7 @@
 - If you find a time that "doesn't count" you can tap on it on the solves page to edit it.
 
 ### Additional Notes
-The Alpha 1.0 Release of Lotus is an Android-only preview of the Lotus cubing timer. The iPhone release will be out soon. 
-Download Lotus.apk in the releases section of the tags page to get started!
+The Alpha Releases of Lotus are Android-only previews of the Lotus cubing timer. The iPhone release will be out once beta testing begins. 
 
 <p align="center">
     <a href="https://github.com/Adog64/Lotus-Mobile/releases/download/v1.3-alpha/Lotus_Alpha_1.3.apk"><img src="https://github.com/Adog64/Lotus-Mobile/blob/master/AndroidDownloadIcon.png"></a>
